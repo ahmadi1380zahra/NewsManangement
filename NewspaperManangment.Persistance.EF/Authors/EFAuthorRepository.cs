@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Persistance.EF.Authors
 {
-    public class EFAuthorRepository:AuthorRepository
+    public class EFAuthorRepository : AuthorRepository
     {
         private readonly DbSet<Author> _authors;
         public EFAuthorRepository(EFDataContext context)
@@ -20,6 +20,16 @@ namespace NewspaperManangment.Persistance.EF.Authors
         public void Add(Author author)
         {
             _authors.Add(author);
+        }
+
+        public async Task<Author?> Find(int id)
+        {
+            return await _authors.FirstOrDefaultAsync(_ => _.Id == id);
+        }
+
+        public void Update(Author author)
+        {
+            _authors.Update(author);
         }
     }
 }

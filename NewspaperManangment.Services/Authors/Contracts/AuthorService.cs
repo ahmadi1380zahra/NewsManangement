@@ -10,5 +10,6 @@ namespace NewspaperManangment.Services.Authors.Contracts
     public interface AuthorService
     {
         Task Add(AddAuthorDto dto);
+        Task Update(int id, UpdateAuthorDto dto);
     }
 }

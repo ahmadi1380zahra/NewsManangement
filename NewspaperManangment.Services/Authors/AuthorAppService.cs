@@ -2,6 +2,7 @@
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Authors.Contracts;
 using NewspaperManangment.Services.Authors.Contracts.Dtos;
+using NewspaperManangment.Services.Authors.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace NewspaperManangment.Services.Authors
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-
+        
         public async Task Add(AddAuthorDto dto)
         {
             var author = new Author
@@ -29,6 +30,18 @@ namespace NewspaperManangment.Services.Authors
             };
             _repository.Add(author);
           await  _unitOfWork.Complete();
+        }
+
+        public async Task Update(int id, UpdateAuthorDto dto)
+        {
+            var author=await _repository.Find(id);
+            if(author == null)
+            {
+                throw new AuthorIsNotExistException();
+            }
+            author.FullName = dto.FullName;
+            _repository.Update(author);
+            await _unitOfWork.Complete();
         }
     }
 }

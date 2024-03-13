@@ -19,5 +19,10 @@ namespace NewspaperManangment.RestApi.Controllers.Authors
         {
            await _service.Add(dto);
         }
+        [HttpPut("{id}")]
+        public async Task Update([FromRoute]int id,[FromBody] UpdateAuthorDto dto)
+        {
+            await _service.Update(id,dto);
+        }
     }
 }

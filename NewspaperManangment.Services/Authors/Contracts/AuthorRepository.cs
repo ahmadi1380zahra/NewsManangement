@@ -10,5 +10,7 @@ namespace NewspaperManangment.Services.Authors.Contracts
     public interface AuthorRepository
     {
         void Add(Author author);
+        Task<Author?> Find(int id);
+        void Update(Author author);
     }
 }
