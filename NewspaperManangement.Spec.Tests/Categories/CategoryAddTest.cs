@@ -15,12 +15,12 @@ namespace NewspaperManangement.Spec.Tests.Categories;
     AsA = "مدیر روزنامه  ",
     IWantTo = "دسته بندی به فهرست دسته بندی ها اضافه کنم ",
     InOrderTo = "  روزنامه و خبر در این دسته بندی ها داشته باشم.")]
-public class TagAddTest : BusinessIntegrationTest
+public class CategoryAddTest : BusinessIntegrationTest
 {
     private readonly CategoryService _sut;
     
 
-    public TagAddTest()
+    public CategoryAddTest()
     {
         _sut = CategoryServiceFactory.Create(SetupContext);
     }
