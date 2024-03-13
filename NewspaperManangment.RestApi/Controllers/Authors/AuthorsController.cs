@@ -24,5 +24,15 @@ namespace NewspaperManangment.RestApi.Controllers.Authors
         {
             await _service.Update(id,dto);
         }
+        [HttpDelete("{id}")]
+        public async Task Delete([FromRoute] int id)
+        {
+            await _service.Delete(id);
+        }
+        [HttpGet]
+        public async Task<List<GetAuthorsDto>?> GetAll([FromQuery]GetAuthorsFilterDto? dto)
+        {
+           return await _service.GetAll(dto);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NewspaperManangment.Entities;
+using NewspaperManangment.Services.Authors.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace NewspaperManangment.Services.Authors.Contracts
     public interface AuthorRepository
     {
         void Add(Author author);
+        void Delete(Author author);
         Task<Author?> Find(int id);
+        Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto);
         void Update(Author author);
     }
 }

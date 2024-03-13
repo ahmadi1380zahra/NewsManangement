@@ -32,6 +32,22 @@ namespace NewspaperManangment.Services.Authors
           await  _unitOfWork.Complete();
         }
 
+        public async Task Delete(int id)
+        {
+            var author = await _repository.Find(id);
+            if (author == null)
+            {
+                throw new AuthorIsNotExistException();
+            }
+            _repository.Delete(author);
+            await _unitOfWork.Complete();
+        }
+
+        public async Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto)
+        {
+            return await _repository.GetAll(dto);
+        }
+
         public async Task Update(int id, UpdateAuthorDto dto)
         {
             var author=await _repository.Find(id);
