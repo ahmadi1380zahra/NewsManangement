@@ -10,5 +10,9 @@ namespace NewspaperManangment.Services.Newspapers.Contracts
     public interface NewspaperRepository
     {
         void Add(Newspaper newspaper);
+       
+        Task<Newspaper?> Find(int id);
+        Task<bool> IsExist(int id);
+        void Update(Newspaper newspaper);
     }
 }

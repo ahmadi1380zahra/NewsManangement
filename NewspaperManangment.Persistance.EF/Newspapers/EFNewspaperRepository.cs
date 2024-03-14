@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Persistance.EF.Newspapers
 {
-    public class EFNewspaperRepository: NewspaperRepository
+    public class EFNewspaperRepository : NewspaperRepository
     {
         private readonly DbSet<Newspaper> _newspaper;
         public EFNewspaperRepository(EFDataContext context)
@@ -21,7 +21,19 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
         {
             _newspaper.Add(newspaper);
         }
+        public async Task<Newspaper?> Find(int id)
+        {
+            return await _newspaper.FirstOrDefaultAsync(x => x.Id == id);
+        }
 
-      
+        public async Task<bool> IsExist(int id)
+        {
+            return await _newspaper.AnyAsync(_ => _.Id == id);
+        }
+
+        public void Update(Newspaper newspaper)
+        {
+            _newspaper.Update(newspaper);
+        }
     }
 }

@@ -75,5 +75,6 @@ namespace NewspaperManangement.Services.UnitTests.Newspapers
             await actual.Should().ThrowExactlyAsync<CategoryIsReduplicateForThisNewspaperException>();
 
         }
+
     }
 }

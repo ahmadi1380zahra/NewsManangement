@@ -2,6 +2,7 @@
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Catgories.Contracts;
 using NewspaperManangment.Services.Catgories.Exceptions;
+using NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos;
 using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
 using NewspaperManangment.Services.Newspapers.Exceptions;
@@ -35,11 +36,11 @@ namespace NewspaperManangment.Services.Newspapers
             };
             foreach (var categoryId in dto.CategoriesId)
             {
-                if (! await _categoryRepository.IsExist(categoryId))
+                if (!await _categoryRepository.IsExist(categoryId))
                 {
                     throw new CategoryIsNotExistException();
                 }
-                if (newspaper.NewspaperCategories.Any(_=>_.CategoryId==categoryId))
+                if (newspaper.NewspaperCategories.Any(_ => _.CategoryId == categoryId))
                 {
                     throw new CategoryIsReduplicateForThisNewspaperException();
                 }
@@ -49,6 +50,24 @@ namespace NewspaperManangment.Services.Newspapers
                 });
             }
             _repository.Add(newspaper);
+            await _unitOfWork.Complete();
+        }
+
+      
+
+        public async Task Update(int id, UpdateNewsPaperDto dto)
+        {
+            var newspaper = await _repository.Find(id);
+            if (newspaper == null)
+            {
+                throw new NewspaperIsNotExistException();
+            }
+            if (newspaper.PublishDate!=null)
+            {
+                throw new NewspaperHasBeenPublishedYouCantUpdateIt();
+            }
+            newspaper.Title = dto.Title;
+            _repository.Update(newspaper);
             await _unitOfWork.Complete();
         }
     }

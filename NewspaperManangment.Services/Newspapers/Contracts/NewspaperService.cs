@@ -10,5 +10,7 @@ namespace NewspaperManangment.Services.Newspapers.Contracts
     public interface NewspaperService
     {
         Task Add(AddNewsPaperDto dto);
+     
+        Task Update(int id, UpdateNewsPaperDto dto);
     }
 }

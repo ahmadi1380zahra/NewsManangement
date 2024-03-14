@@ -8,7 +8,7 @@ using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
 using Xunit;
 
-namespace NewspaperManangement.Spec.Tests.Newspaper;
+namespace NewspaperManangement.Spec.Tests.Newspapers;
 
 [Scenario("ثبت کردن روزنامه")]
 [Story("",
