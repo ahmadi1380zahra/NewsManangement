@@ -12,6 +12,8 @@ namespace NewspaperManangment.Services.Newspapers.Contracts
         void Add(Newspaper newspaper);
        
         Task<Newspaper?> Find(int id);
+        Task<bool> IsDuplicateTitle(string title);
+        Task<bool> IsDuplicateTitleExceptiItSelf(int id, string title);
         Task<bool> IsExist(int id);
         void Update(Newspaper newspaper);
     }

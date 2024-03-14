@@ -30,6 +30,10 @@ namespace NewspaperManangment.Services.Newspapers
 
         public async Task Add(AddNewsPaperDto dto)
         {
+            if (await _repository.IsDuplicateTitle(dto.Title))
+            {
+                throw new NewspaperShouldHaveUniqueNameException();
+            }
             var newspaper = new Newspaper
             {
                 Title = dto.Title,
@@ -53,7 +57,7 @@ namespace NewspaperManangment.Services.Newspapers
             await _unitOfWork.Complete();
         }
 
-      
+
 
         public async Task Update(int id, UpdateNewsPaperDto dto)
         {
@@ -62,7 +66,12 @@ namespace NewspaperManangment.Services.Newspapers
             {
                 throw new NewspaperIsNotExistException();
             }
-            if (newspaper.PublishDate!=null)
+            if (await _repository.IsDuplicateTitleExceptiItSelf(newspaper.Id, dto.Title))
+            {
+                throw new NewspaperShouldHaveUniqueNameException();
+            }
+
+            if (newspaper.PublishDate != null)
             {
                 throw new NewspaperHasBeenPublishedYouCantUpdateIt();
             }

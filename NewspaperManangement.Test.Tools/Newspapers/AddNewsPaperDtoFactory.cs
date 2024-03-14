@@ -10,13 +10,15 @@ namespace NewspaperManangement.Test.Tools.Newspapers
 {
     public static class AddNewsPaperDtoFactory
     {
-        public static AddNewsPaperDto Create(int categoryId1
+        public static AddNewsPaperDto Create(
+            int categoryId1
             , int categoryId2
-            , int categoryId3)
+            , int categoryId3
+            , string? title = null)
         {
             return new AddNewsPaperDto
             {
-                Title = "طلوع",
+                Title = title?? "طلوع",
                 CategoriesId = new List<int>
              {
              categoryId1,

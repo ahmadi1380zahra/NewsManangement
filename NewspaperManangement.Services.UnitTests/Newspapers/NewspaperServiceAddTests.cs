@@ -45,6 +45,29 @@ namespace NewspaperManangement.Services.UnitTests.Newspapers
 
         }
         [Fact]
+        public async Task Add_throws_NewspaperShouldHaveUniqueNameException()
+        {
+            var category1 = new CategoryBuilder().WithTitle("جنایی").Build();
+            DbContext.Save(category1);
+            var newspaper = new NewspaperBuilder()
+                 .WithTitle("طلوع")
+                 .WithCategory(category1.Id).Build();
+            DbContext.Save(newspaper);
+            var category2 = new CategoryBuilder().WithTitle("ورزشی").Build();
+            DbContext.Save(category2);
+            var category3 = new CategoryBuilder().WithTitle("فرهنگی").Build();
+            DbContext.Save(category3);
+            var dto = AddNewsPaperDtoFactory.Create(category1.Id
+                , category2.Id
+                , category3.Id
+                ,"طلوع");
+
+          var actual = () => _sut.Add(dto);
+
+            await actual.Should().ThrowExactlyAsync<NewspaperShouldHaveUniqueNameException>();
+
+        }
+        [Fact]
         public async Task Add_throws_CategoryIsNotExistException()
         {
             var dummyCategory1 = 10;

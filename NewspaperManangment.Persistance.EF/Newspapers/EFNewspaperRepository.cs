@@ -26,6 +26,19 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
             return await _newspaper.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<bool> IsDuplicateTitle(string title)
+        {
+            return await _newspaper.AnyAsync(_ => _.Title.Replace(" ",String.Empty)
+            .Equals(title.Replace(" ", String.Empty)));
+        }
+
+        public async Task<bool> IsDuplicateTitleExceptiItSelf(int id, string title)
+        {
+            return await _newspaper.AnyAsync(_ => _.Title.Replace(" ", String.Empty)
+            .Equals(title.Replace(" ", String.Empty))
+            && _.Id !=id);
+        }
+
         public async Task<bool> IsExist(int id)
         {
             return await _newspaper.AnyAsync(_ => _.Id == id);

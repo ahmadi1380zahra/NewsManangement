@@ -19,5 +19,10 @@ namespace NewspaperManangment.RestApi.Controllers.Newspapers
         {
           await  _service.Add(dto);
         }
+        [HttpPatch("{id}")]
+        public async Task Update(int id,[FromBody] UpdateNewsPaperDto dto)
+        {
+            await _service.Update(id,dto);
+        }
     }
 }
