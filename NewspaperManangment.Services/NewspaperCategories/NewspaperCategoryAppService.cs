@@ -4,6 +4,7 @@ using NewspaperManangment.Services.Catgories.Contracts;
 using NewspaperManangment.Services.Catgories.Exceptions;
 using NewspaperManangment.Services.NewspaperCategories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos;
+using NewspaperManangment.Services.NewspaperCategories.Exceptions;
 using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Newspapers.Exceptions;
 using System;
@@ -40,6 +41,10 @@ namespace NewspaperManangment.Services.NewspaperCategories
             {
                 throw new NewspaperIsNotExistException();
             }
+            if (await _newspaperRepository.IsPublish(dto.newspaperId))
+            {
+                throw new NewspaperHasBeenPublishedYouCantUpdateIt();
+            }
             if (await _repository.IsReduplicateCategoryIdForThisNewspaper(dto.newspaperId,dto.categoryId))
             {
                 throw new CategoryIsReduplicateForThisNewspaperException();
@@ -52,6 +57,17 @@ namespace NewspaperManangment.Services.NewspaperCategories
             _repository.Add(newspaperCategory);
             await _unitOfWork.Complete();
 
+        }
+
+        public async Task Delete(int id)
+        {
+            var newspaperCategory =await _repository.Find(id);
+            if (newspaperCategory==null)
+            {
+                throw new NewspaperCategoryIsNotExistException();
+            }
+            _repository.Delete(newspaperCategory);
+          await  _unitOfWork.Complete();
         }
     }
 }

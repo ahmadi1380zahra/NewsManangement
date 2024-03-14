@@ -2,6 +2,7 @@
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Catgories.Contracts;
 using NewspaperManangment.Services.Catgories.Exceptions;
+using NewspaperManangment.Services.NewspaperCategories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos;
 using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
@@ -18,14 +19,17 @@ namespace NewspaperManangment.Services.Newspapers
     {
         private readonly NewspaperRepository _repository;
         private readonly CategoryRepository _categoryRepository;
+        private readonly NewspaperCategoryRepository _newspaperCategoryRepository;
         private readonly UnitOfWork _unitOfWork;
         public NewspaperAppService(NewspaperRepository repository
                                   , UnitOfWork unitOfWork
-                                  , CategoryRepository categoryRepository)
+                                  , CategoryRepository categoryRepository
+                                  , NewspaperCategoryRepository newspaperUategoryRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
             _categoryRepository = categoryRepository;
+            _newspaperCategoryRepository = newspaperUategoryRepository;
         }
 
         public async Task Add(AddNewsPaperDto dto)
@@ -57,7 +61,29 @@ namespace NewspaperManangment.Services.Newspapers
             await _unitOfWork.Complete();
         }
 
+        public async Task Delete(int id)
+        {
+            var newspaper = await _repository.Find(id);
+            if (newspaper == null)
+            {
+                throw new NewspaperIsNotExistException();
+            }
+            if (newspaper.PublishDate!=null)
+            {
+                throw new NewspaperHasBeenPublishedYouCantDeleteIt();
+            }
+            if (await _newspaperCategoryRepository.IsExistCategoryForThisNewspaper( id))
+            {
+                _newspaperCategoryRepository.DeleteCategoryForThisNewspaper(id);
+            }
+            _repository.Delete(newspaper);
+            await _unitOfWork.Complete();
+        }
 
+        public async Task<List<GetNewspaperDto>?> GetAll(GetNewspaperFilterDto? dto)
+        {
+            return await _repository.GetAll(dto);
+        }
 
         public async Task Update(int id, UpdateNewsPaperDto dto)
         {

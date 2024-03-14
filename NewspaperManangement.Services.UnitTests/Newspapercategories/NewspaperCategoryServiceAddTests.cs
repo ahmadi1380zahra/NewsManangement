@@ -81,5 +81,20 @@ namespace NewspaperManangement.Services.UnitTests.Newspapercategories
 
             await actual.Should().ThrowExactlyAsync<CategoryIsReduplicateForThisNewspaperException>();
         }
+        [Fact]
+        public async Task Add_throws_NewspaperHasBeenPublishedYouCantUpdateIt()
+        {
+            var category1 = new CategoryBuilder().WithTitle("جنایی").Build();
+            DbContext.Save(category1);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع")
+                .WithCategory(category1.Id)
+                .WithPublishDate(new DateTime(2024,3,14)).Build();
+            DbContext.Save(newspaper);
+            var dto = AddNewspaperCategoryDtoFactory.Create(category1.Id, newspaper.Id);
+
+            var actual = () => _sut.Add(dto);
+
+            await actual.Should().ThrowExactlyAsync<NewspaperHasBeenPublishedYouCantUpdateIt>();
+        }
     }
 }

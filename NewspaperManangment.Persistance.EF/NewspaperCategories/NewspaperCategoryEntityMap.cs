@@ -14,14 +14,19 @@ namespace NewspaperManangment.Persistance.EF.NewspaperCategories
         public void Configure(EntityTypeBuilder<NewspaperCategory> builder)
         {
             builder.HasKey(_ => _.Id);
-            builder.Property(_=>_.Id).ValueGeneratedOnAdd();
+            builder.Property(_ => _.Id).ValueGeneratedOnAdd();
 
+          
             builder.HasOne(_ => _.Newspaper)
-                .WithMany(_ => _.NewspaperCategories)
-                .HasForeignKey(_ => _.NewspaperId).IsRequired();
+           .WithMany(_ => _.NewspaperCategories)
+            .HasForeignKey(_ => _.NewspaperId)
+            .IsRequired()
+           .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.HasOne(_ => _.Category)
-                .WithMany(_=>_.NewspaperCategories)
-                .HasForeignKey (_ => _.CategoryId).IsRequired();
+                .WithMany(_ => _.NewspaperCategories)
+                .HasForeignKey(_ => _.CategoryId).IsRequired();
         }
     }
 }

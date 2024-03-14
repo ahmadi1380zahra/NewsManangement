@@ -18,6 +18,7 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
             builder.Property(_ => _.Title).IsRequired().HasMaxLength(50);
             builder.Property(_ => _.PublishDate);
 
+           
         }
     }
 }

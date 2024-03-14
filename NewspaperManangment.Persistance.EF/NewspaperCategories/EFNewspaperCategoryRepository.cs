@@ -22,6 +22,28 @@ namespace NewspaperManangment.Persistance.EF.NewspaperCategories
             _newspaperCategories.Add(newspaperCategory);
         }
 
+        public void Delete(NewspaperCategory newspaperCategory)
+        {
+            _newspaperCategories.Remove(newspaperCategory);
+        }
+
+        public void DeleteCategoryForThisNewspaper(int id)
+        {
+            var categoriesOfnewspaper =  _newspaperCategories
+                .Where(_ => _.NewspaperId == id);
+            _newspaperCategories.RemoveRange(categoriesOfnewspaper);
+        }
+
+        public async Task<NewspaperCategory?> Find(int id)
+        {
+            return await _newspaperCategories.FirstOrDefaultAsync(_ => _.Id == id);
+        }
+
+        public async Task<bool> IsExistCategoryForThisNewspaper(int id)
+        {
+            return await _newspaperCategories.AnyAsync(_ => _.NewspaperId == id);
+        }
+
         public async Task<bool> IsReduplicateCategoryIdForThisNewspaper(int newspaperId, int categoryId)
         {
             return await _newspaperCategories.AnyAsync(_ => _.NewspaperId == newspaperId

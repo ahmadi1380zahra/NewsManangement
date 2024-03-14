@@ -1,5 +1,6 @@
 ﻿using NewspaperManangment.Persistance.EF;
 using NewspaperManangment.Persistance.EF.Categories;
+using NewspaperManangment.Persistance.EF.NewspaperCategories;
 using NewspaperManangment.Persistance.EF.Newspapers;
 using NewspaperManangment.Services.Newspapers;
 using NewspaperManangment.Services.Newspapers.Contracts;
@@ -18,7 +19,8 @@ namespace NewspaperManangement.Test.Tools.Newspapers
             return new NewspaperAppService(
                 new EFNewspaperRepository(context)
                 ,new EFUnitOfWork(context)
-                ,new EFCategoryRepository(context));
+                ,new EFCategoryRepository(context)
+                ,new EFNewspaperCategoryRepository(context));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Newspapers.Contracts;
+using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,33 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
         {
             _newspaper.Add(newspaper);
         }
+
+        public void Delete(Newspaper newspaper)
+        {
+            _newspaper.Remove(newspaper);
+        }
+
         public async Task<Newspaper?> Find(int id)
         {
             return await _newspaper.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<GetNewspaperDto>?> GetAll(GetNewspaperFilterDto? dto)
+        {
+            var newspapers = _newspaper.Include(_ => _.NewspaperCategories)
+                 .Select(newspaper => new GetNewspaperDto()
+                 {
+                     Id= newspaper.Id,
+                     Title=newspaper.Title,
+                     Status=(newspaper.PublishDate == null?"منتشر نشده":"منتشر شده"+newspaper.PublishDate)
+                 });
+            if (dto.Title != null)
+            {
+                newspapers = newspapers.Where(_ => _.Title.Replace(" ", string.Empty)
+                .Contains(dto.Title.Replace(" ", string.Empty)));
+            }
+            return await newspapers.ToListAsync();
+
         }
 
         public async Task<bool> IsDuplicateTitle(string title)
@@ -42,6 +67,11 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
         public async Task<bool> IsExist(int id)
         {
             return await _newspaper.AnyAsync(_ => _.Id == id);
+        }
+
+        public async Task<bool> IsPublish(int id)
+        {
+            return await _newspaper.AnyAsync(_ => _.Id == id && _.PublishDate != null);
         }
 
         public void Update(Newspaper newspaper)

@@ -10,5 +10,6 @@ namespace NewspaperManangment.Services.NewspaperCategories.Contracts
     public interface NewspaperCategoryService
     {
         Task Add(AddNewspaperCategoryDto dto);
+        Task Delete(int id);
     }
 }
