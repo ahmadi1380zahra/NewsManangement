@@ -21,5 +21,6 @@ namespace NewspaperManangment.Persistance.EF.TheNews
         {
          _theNews.Add(theNew);
         }
+
     }
 }

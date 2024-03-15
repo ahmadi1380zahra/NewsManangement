@@ -14,6 +14,7 @@ namespace NewspaperManangment.Services.Tags.Contracts
         void Delete(Tag tag);
         Task<Tag?> Find(int id);
         Task<List<GetTagDto>?> GetAll(GetTagFilterDto? dto);
+        Task<bool> IsExist(int id);
         void Update(Tag tag);
     }
 }

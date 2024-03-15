@@ -50,6 +50,11 @@ namespace NewspaperManangment.Persistance.EF.Tags
             return tags;
         }
 
+        public async Task<bool> IsExist(int id)
+        {
+           return await _tags.AnyAsync(_ => _.Id == id);
+        }
+
         public void Update(Tag tag)
         {
             _tags.Update(tag);

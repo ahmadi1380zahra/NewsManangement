@@ -39,6 +39,11 @@ namespace NewspaperManangment.Persistance.EF.NewspaperCategories
             return await _newspaperCategories.FirstOrDefaultAsync(_ => _.Id == id);
         }
 
+        public async Task<bool> IsExist(int id)
+        {
+            return await _newspaperCategories.AnyAsync(_ => _.Id == id);
+        }
+
         public async Task<bool> IsExistCategoryForThisNewspaper(int id)
         {
             return await _newspaperCategories.AnyAsync(_ => _.NewspaperId == id);

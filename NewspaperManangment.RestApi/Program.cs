@@ -6,6 +6,7 @@ using NewspaperManangment.Persistance.EF.Categories;
 using NewspaperManangment.Persistance.EF.NewspaperCategories;
 using NewspaperManangment.Persistance.EF.Newspapers;
 using NewspaperManangment.Persistance.EF.Tags;
+using NewspaperManangment.Persistance.EF.TheNews;
 using NewspaperManangment.Services.Authors;
 using NewspaperManangment.Services.Authors.Contracts;
 using NewspaperManangment.Services.Catgories;
@@ -16,6 +17,8 @@ using NewspaperManangment.Services.Newspapers;
 using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Tags;
 using NewspaperManangment.Services.Tags.Contracts;
+using NewspaperManangment.Services.TheNews;
+using NewspaperManangment.Services.TheNews.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +44,8 @@ builder.Services.AddScoped<NewspaperService, NewspaperAppService>();
 builder.Services.AddScoped<NewspaperRepository, EFNewspaperRepository>();
 builder.Services.AddScoped<NewspaperCategoryService, NewspaperCategoryAppService>();
 builder.Services.AddScoped<NewspaperCategoryRepository, EFNewspaperCategoryRepository>();
+builder.Services.AddScoped<TheNewService, TheNewAppService>();
+builder.Services.AddScoped<TheNewRepository, EFTheNewRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

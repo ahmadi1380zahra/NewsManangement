@@ -19,5 +19,10 @@ namespace NewspaperManangment.RestApi.Controllers.NewspaperCategories
         {
           await  _service.Add(dto);
         }
+        [HttpDelete("{id}")]
+        public async Task Delete([FromRoute]int id)
+        {
+            await _service.Delete(id);
+        }
     }
 }

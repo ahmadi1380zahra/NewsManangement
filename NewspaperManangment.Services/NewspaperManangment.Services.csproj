@@ -11,8 +11,4 @@
     <ProjectReference Include="..\NewspaperManangment.Entities\NewspaperManangment.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TheNews\Exceptions\" />
-  </ItemGroup>
-
 </Project>

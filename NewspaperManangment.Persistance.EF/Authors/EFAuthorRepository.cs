@@ -49,6 +49,11 @@ namespace NewspaperManangment.Persistance.EF.Authors
             return await authors.ToListAsync();
         }
 
+        public async Task<bool> IsExist(int id)
+        {
+            return await _authors.AnyAsync(_ => _.Id == id);
+        }
+
         public void Update(Author author)
         {
             _authors.Update(author);
