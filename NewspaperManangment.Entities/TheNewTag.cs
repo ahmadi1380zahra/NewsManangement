@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Entities
 {
-    public class Author
+    public class TheNewTag
     {
-        public Author()
-        {
-            TheNews = new();
-        }
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public HashSet<TheNew> TheNews { get; set; }
-
+        public Tag Tag { get; set; }
+        public int TagId { get; set; }
+        public TheNew TheNew { get; set; }
+        public int TheNewId { get; set; }
     }
 }

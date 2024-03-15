@@ -9,9 +9,15 @@ namespace NewspaperManangment.Entities
 {
     public class Tag
     {
+        public Tag()
+        {
+            TheNewTags = new();
+        }
         public int Id { get; set; }
         public string Title { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }
+        public HashSet<TheNewTag> TheNewTags { get; set; }
+
     }
 }

@@ -19,6 +19,8 @@ public class EFDataContext : DbContext
     public DbSet<Author> Authors { get; set; }
     public DbSet<Newspaper> Newspapers { get; set; }
     public DbSet<NewspaperCategory> NewspaperCategories { get; set; }
+    public DbSet<TheNew> TheNews { get; set; }
+    public DbSet<TheNewTag> TheNewTags { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
