@@ -100,5 +100,12 @@ namespace NewspaperManangment.Services.TheNews
             await _unitOfWork.Complete();
 
         }
+
+        public async Task<GetTheNewDto?> GetToIncreaseView(int id)
+        {
+            await _repository.IncreaseView(id);
+            await _unitOfWork.Complete();
+            return await _repository.GetToIncreaseView(id);
+        }
     }
 }

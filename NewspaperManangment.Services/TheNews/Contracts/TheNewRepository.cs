@@ -1,4 +1,5 @@
 ﻿using NewspaperManangment.Entities;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace NewspaperManangment.Services.TheNews.Contracts
     public interface TheNewRepository
     {
         void Add(TheNew theNew);
+        Task<GetTheNewDto?> GetToIncreaseView(int id);
+        Task IncreaseView(int id);
         Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);
     }
 }

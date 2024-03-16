@@ -20,5 +20,10 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
             await _service.Add(dto);
         }
+        [HttpGet]
+        public async Task<GetTheNewDto?> GetToIncreaseViews([FromQuery]int id)
+        {
+          return  await _service.GetToIncreaseView(id);
+        }
     }
 }

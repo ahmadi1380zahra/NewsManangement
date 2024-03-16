@@ -10,5 +10,6 @@ namespace NewspaperManangment.Services.TheNews.Contracts
     public interface TheNewService
     {
         Task Add(AddTheNewDto dto);
+        Task<GetTheNewDto?> GetToIncreaseView(int id);
     }
 }

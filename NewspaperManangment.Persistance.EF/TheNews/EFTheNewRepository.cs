@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.TheNews.Contracts;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +20,46 @@ namespace NewspaperManangment.Persistance.EF.TheNews
 
         public void Add(TheNew theNew)
         {
-         _theNews.Add(theNew);
+            _theNews.Add(theNew);
+        }
+
+        public async Task<GetTheNewDto?> GetToIncreaseView(int id)
+        {
+            var TheNew = await _theNews.Include(_=>_.Author).FirstOrDefaultAsync(_ => _.Id == id);
+
+            if (TheNew == null)
+            {
+                return null;
+            }
+            
+            return new GetTheNewDto
+            {
+                Id = TheNew.Id,
+                Title = TheNew.Title,
+                Description=TheNew.Description,
+                Rate=TheNew.Rate,
+                View=TheNew.View,
+                AuthorName=TheNew.Author.FullName
+                
+            };
+           
+        }
+
+        public async Task IncreaseView(int id)
+        {
+            var theNew = await _theNews.FirstOrDefaultAsync(_ => _.Id==id);
+            if (theNew != null)
+            {
+                theNew.View++;
+            }
+          
         }
 
         public async Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId)
         {
-            return await _theNews 
+            return await _theNews
                 .Where(_ => _.NewspaperCategoryId == newsPaperCategoryId)
-               .SumAsync(_=>_.Rate);
+               .SumAsync(_ => _.Rate);
         }
     }
 }
