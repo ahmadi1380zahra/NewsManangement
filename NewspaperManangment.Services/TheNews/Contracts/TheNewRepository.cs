@@ -11,6 +11,8 @@ namespace NewspaperManangment.Services.TheNews.Contracts
     public interface TheNewRepository
     {
         void Add(TheNew theNew);
+        void Delete(TheNew theNew);
+        Task<TheNew?> Find(int id);
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task IncreaseView(int id);
         Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);

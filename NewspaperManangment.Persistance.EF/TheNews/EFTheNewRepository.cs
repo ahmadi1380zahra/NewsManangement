@@ -23,6 +23,16 @@ namespace NewspaperManangment.Persistance.EF.TheNews
             _theNews.Add(theNew);
         }
 
+        public void Delete(TheNew theNew)
+        {
+            _theNews.Remove(theNew);
+        }
+
+        public async Task<TheNew?> Find(int id)
+        {
+            return await _theNews.FirstOrDefaultAsync(_=>_.Id==id);
+        }
+
         public async Task<GetTheNewDto?> GetToIncreaseView(int id)
         {
             var TheNew = await _theNews.Include(_=>_.Author).FirstOrDefaultAsync(_ => _.Id == id);
