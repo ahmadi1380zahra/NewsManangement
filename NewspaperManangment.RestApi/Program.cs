@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Infrastructure;
 using NewspaperManangment.Persistance.EF;
 using NewspaperManangment.Persistance.EF.Authors;
 using NewspaperManangment.Persistance.EF.Categories;
@@ -46,6 +47,7 @@ builder.Services.AddScoped<NewspaperCategoryService, NewspaperCategoryAppService
 builder.Services.AddScoped<NewspaperCategoryRepository, EFNewspaperCategoryRepository>();
 builder.Services.AddScoped<TheNewService, TheNewAppService>();
 builder.Services.AddScoped<TheNewRepository, EFTheNewRepository>();
+builder.Services.AddScoped<DateTimeService, DateTimeAppService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
