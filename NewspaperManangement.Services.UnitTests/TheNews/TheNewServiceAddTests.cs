@@ -64,6 +64,65 @@ namespace NewspaperManangement.Services.UnitTests.TheNews
             newstags.Should().Be(2);
         }
         [Fact]
+        public async Task Add_throws_TheNewspaperCategoryIsFullException()
+        {
+            var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
+            DbContext.Save(category);
+            var tag1 = new TagBuilder(category.Id).WithTitle("فوتبال").Build();
+            DbContext.Save(tag1);
+            var tag2 = new TagBuilder(category.Id).WithTitle("فوتبال چمن").Build();
+            DbContext.Save(tag2);
+            var author = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع").Build();
+            DbContext.Save(newspaper);
+            var newspaperCategory = new NewspaperCategoryBuilder(category.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory);
+            var theNew = new TheNewBuilder(author.Id, newspaperCategory.Id)
+                .WithTitle("پرسپولیس در لیگ")
+                .WithDesciption("پرسپولیس قهرمان لیگ شد")
+                .WithRate(15)
+                .WithTheNewTags(tag1.Id)
+                .WithTheNewTags(tag2.Id)
+                .Build();
+            DbContext.Save(theNew);
+            var dto = new AddTheNewDtoBuilder(author.Id, newspaperCategory.Id)
+                      .WithTagId(tag1.Id)
+                      .WithTagId(tag2.Id)
+                      .WithRate(18)
+                      .Build();
+
+            var actual = () => _sut.Add(dto);
+
+            await actual.Should().ThrowExactlyAsync<TheNewspaperCategoryIsFullException>();
+        }
+        [Fact]
+        public async Task Add_throws_TheNewsRateCantBeEqualToCategoryRateItShouldBeLessException()
+        {
+           var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
+            DbContext.Save(category);
+            var tag1 = new TagBuilder(category.Id).WithTitle("فوتبال").Build();
+            DbContext.Save(tag1);
+            var tag2 = new TagBuilder(category.Id).WithTitle("فوتبال چمن").Build();
+            DbContext.Save(tag2);
+            var author = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع").Build();
+            DbContext.Save(newspaper);
+            var newspaperCategory = new NewspaperCategoryBuilder(category.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory);
+            var dto = new AddTheNewDtoBuilder(author.Id, newspaperCategory.Id)
+                     .WithTagId(tag1.Id)
+                     .WithTagId(tag2.Id)
+                     .WithRate(20)
+                     .Build();
+
+            var actual = () => _sut.Add(dto);
+
+            await actual.Should().ThrowExactlyAsync<TheNewsRateCantBeEqualToCategoryRateItShouldBeLessException>();
+
+        }
+        [Fact]
         public async Task Add_throws_AuthorIsNotExistException()
         {
             var dummyAuthorId = 111;

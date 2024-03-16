@@ -10,5 +10,6 @@ namespace NewspaperManangment.Services.TheNews.Contracts
     public interface TheNewRepository
     {
         void Add(TheNew theNew);
+        Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);
     }
 }

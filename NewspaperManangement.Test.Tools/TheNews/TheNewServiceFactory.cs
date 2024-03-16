@@ -1,5 +1,6 @@
 ﻿using NewspaperManangment.Persistance.EF;
 using NewspaperManangment.Persistance.EF.Authors;
+using NewspaperManangment.Persistance.EF.Categories;
 using NewspaperManangment.Persistance.EF.NewspaperCategories;
 using NewspaperManangment.Persistance.EF.Tags;
 using NewspaperManangment.Persistance.EF.TheNews;
@@ -21,7 +22,8 @@ namespace NewspaperManangement.Test.Tools.TheNews
                 , new EFUnitOfWork(context)
                 ,new EFAuthorRepository(context)
                 ,new EFNewspaperCategoryRepository(context)
-                ,new EFTagRepository(context));
+                ,new EFTagRepository(context)
+                ,new EFCategoryRepository(context));
         }
 
     }

@@ -22,5 +22,11 @@ namespace NewspaperManangment.Persistance.EF.TheNews
          _theNews.Add(theNew);
         }
 
+        public async Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId)
+        {
+            return await _theNews 
+                .Where(_ => _.NewspaperCategoryId == newsPaperCategoryId)
+               .SumAsync(_=>_.Rate);
+        }
     }
 }

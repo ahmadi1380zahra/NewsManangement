@@ -2,6 +2,7 @@
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Authors.Contracts;
 using NewspaperManangment.Services.Authors.Exceptions;
+using NewspaperManangment.Services.Catgories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Exceptions;
 using NewspaperManangment.Services.Tags.Contracts;
@@ -23,18 +24,21 @@ namespace NewspaperManangment.Services.TheNews
         private readonly UnitOfWork _unitOfWork;
         private readonly AuthorRepository _authorRepository;
         private readonly TagRepository _tagRepository;
+        private readonly CategoryRepository _categoryRepository;
         private readonly NewspaperCategoryRepository _newspaperCategoryRepository;
         public TheNewAppService(TheNewRepository repository
             , UnitOfWork unitOfWork
             , AuthorRepository authorRepository
             , NewspaperCategoryRepository newspaperCategoryRepository
-            , TagRepository tagRepository)
+            , TagRepository tagRepository
+           , CategoryRepository categoryRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
             _authorRepository = authorRepository;
             _newspaperCategoryRepository = newspaperCategoryRepository;
             _tagRepository = tagRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task Add(AddTheNewDto dto)
@@ -63,8 +67,17 @@ namespace NewspaperManangment.Services.TheNews
                 View = 0,
 
             };
-
-
+          
+            var allowedCategory = await _categoryRepository.Find(allowedCategoryId);
+            if (dto.Rate == allowedCategory!.Rate)
+            {
+                throw new TheNewsRateCantBeEqualToCategoryRateItShouldBeLessException();
+            }
+            var totalNewsRateInCategoryNewsPaper = await _repository.TotalNewsRateInOneCategoryNewspaper(dto.NewsPaperCategoryId);
+            if(totalNewsRateInCategoryNewsPaper+dto.Rate> allowedCategory!.Rate)
+            {
+                throw new TheNewspaperCategoryIsFullException();
+            }
             foreach (var tagId in dto.TagsId)
             {
                 var tag = await _tagRepository.Find(tagId);
