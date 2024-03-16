@@ -5,6 +5,7 @@ using NewspaperManangment.Services.Authors.Exceptions;
 using NewspaperManangment.Services.Catgories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Contracts;
 using NewspaperManangment.Services.NewspaperCategories.Exceptions;
+using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Tags.Contracts;
 using NewspaperManangment.Services.Tags.Exceptions;
 using NewspaperManangment.Services.TheNews.Contracts;
@@ -26,12 +27,14 @@ namespace NewspaperManangment.Services.TheNews
         private readonly TagRepository _tagRepository;
         private readonly CategoryRepository _categoryRepository;
         private readonly NewspaperCategoryRepository _newspaperCategoryRepository;
+        private readonly NewspaperRepository _newspaperRepository;
         public TheNewAppService(TheNewRepository repository
             , UnitOfWork unitOfWork
             , AuthorRepository authorRepository
             , NewspaperCategoryRepository newspaperCategoryRepository
             , TagRepository tagRepository
-           , CategoryRepository categoryRepository)
+           , CategoryRepository categoryRepository
+            , NewspaperRepository newspaperRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
@@ -39,6 +42,7 @@ namespace NewspaperManangment.Services.TheNews
             _newspaperCategoryRepository = newspaperCategoryRepository;
             _tagRepository = tagRepository;
             _categoryRepository = categoryRepository;
+            _newspaperRepository= newspaperRepository;
         }
 
         public async Task Add(AddTheNewDto dto)
@@ -98,6 +102,24 @@ namespace NewspaperManangment.Services.TheNews
             }
             _repository.Add(theNew);
             await _unitOfWork.Complete();
+
+        }
+
+        public async Task Delete(int id)
+        {
+           var theNew=await _repository.Find(id);
+           if(theNew == null)
+            {
+                throw new TheNewIsNotExistedException();
+            }
+            var newsPaperCategory = await _newspaperCategoryRepository.Find(theNew.NewspaperCategoryId);
+            var newspaper=await _newspaperRepository.Find(newsPaperCategory!.NewspaperId);
+            if (newspaper!.PublishDate != null)
+            {
+                throw new TheNewHasBeenPublishedYouCantDeleteItException();
+            }
+                _repository.Delete(theNew);
+           await _unitOfWork.Complete();
 
         }
 

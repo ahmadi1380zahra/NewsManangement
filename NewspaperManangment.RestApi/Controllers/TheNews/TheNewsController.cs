@@ -25,5 +25,10 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
           return  await _service.GetToIncreaseView(id);
         }
+        [HttpDelete("{id}")]
+        public async Task Delete([FromRoute] int id)
+        {
+             await _service.Delete(id);
+        }
     }
 }
