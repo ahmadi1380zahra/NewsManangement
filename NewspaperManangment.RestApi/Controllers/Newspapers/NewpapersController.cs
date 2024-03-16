@@ -34,6 +34,10 @@ namespace NewspaperManangment.RestApi.Controllers.Newspapers
         {
             return await _service.GetAll(dto);
         }
-
+        [HttpPatch("Publish/{id}")]
+        public async Task Publish([FromRoute] int id)
+        {
+            await _service.Publish(id);
+        }
     }
 }

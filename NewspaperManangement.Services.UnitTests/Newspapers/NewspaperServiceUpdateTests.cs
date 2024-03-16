@@ -1,8 +1,13 @@
-﻿using FluentAssertions;
+﻿using Azure;
+using FluentAssertions;
+using NewspaperManangement.Test.Tools.Authors;
 using NewspaperManangement.Test.Tools.Categories;
 using NewspaperManangement.Test.Tools.Infrastructure.DatabaseConfig;
 using NewspaperManangement.Test.Tools.Infrastructure.DatabaseConfig.Unit;
+using NewspaperManangement.Test.Tools.NewspaperCategories;
 using NewspaperManangement.Test.Tools.Newspapers;
+using NewspaperManangement.Test.Tools.Tags;
+using NewspaperManangement.Test.Tools.TheNews;
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Newspapers.Contracts;
 using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
@@ -45,9 +50,9 @@ namespace NewspaperManangement.Services.UnitTests.Newspapers
             var dummyNewspaperId = 12;
             var dto = UpdateNewsPaperDtoFactory.Create("انقلاب");
 
-            var actual=()=> _sut.Update(dummyNewspaperId, dto);
+            var actual = () => _sut.Update(dummyNewspaperId, dto);
 
-            await  actual.Should().ThrowExactlyAsync<NewspaperIsNotExistException>();
+            await actual.Should().ThrowExactlyAsync<NewspaperIsNotExistException>();
         }
         [Fact]
         public async Task Update_throws_NewspaperHasBeenPublishedYouCantUpdateIt()
@@ -55,7 +60,7 @@ namespace NewspaperManangement.Services.UnitTests.Newspapers
             var category1 = new CategoryBuilder().WithTitle("جنایی").Build();
             DbContext.Save(category1);
             var newspaper = new NewspaperBuilder()
-                .WithPublishDate(new DateTime(2024/10/2))
+                .WithPublishDate(new DateTime(2024 / 10 / 2))
                 .WithCategory(category1.Id).Build();
             DbContext.Save(newspaper);
             var dto = UpdateNewsPaperDtoFactory.Create("انقلاب");

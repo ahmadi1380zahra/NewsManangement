@@ -12,7 +12,8 @@ namespace NewspaperManangment.Services.Newspapers.Contracts
     {
         Task Add(AddNewsPaperDto dto);
         Task Delete(int id);
-       Task<List<GetNewspaperDto>?> GetAll(GetNewspaperFilterDto? dto);
+        Task<List<GetNewspaperDto>?> GetAll(GetNewspaperFilterDto? dto);
+        Task Publish(int id);
         Task Update(int id, UpdateNewsPaperDto dto);
     }
 }

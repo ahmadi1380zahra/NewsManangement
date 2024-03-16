@@ -30,7 +30,9 @@ namespace NewspaperManangment.Persistance.EF.Newspapers
 
         public async Task<Newspaper?> Find(int id)
         {
-            return await _newspaper.FirstOrDefaultAsync(x => x.Id == id);
+            return await _newspaper.Include(_=>_.NewspaperCategories)
+                .ThenInclude(_=>_.TheNews)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<GetNewspaperDto>?> GetAll(GetNewspaperFilterDto? dto)
