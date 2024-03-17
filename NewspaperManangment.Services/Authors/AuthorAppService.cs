@@ -48,6 +48,11 @@ namespace NewspaperManangment.Services.Authors
             return await _repository.GetAll(dto);
         }
 
+        public async Task<List<GetAuthorsDto>?> GetMostViewed()
+        {
+            return await _repository.GetMostViewed();
+        }
+
         public async Task Update(int id, UpdateAuthorDto dto)
         {
             var author=await _repository.Find(id);

@@ -12,6 +12,7 @@ namespace NewspaperManangment.Services.Authors.Contracts
         Task Add(AddAuthorDto dto);
         Task Delete(int id);
         Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto);
+        Task<List<GetAuthorsDto>?> GetMostViewed();
         Task Update(int id, UpdateAuthorDto dto);
     }
 }
