@@ -30,39 +30,56 @@ namespace NewspaperManangment.Persistance.EF.TheNews
 
         public async Task<TheNew?> Find(int id)
         {
-            return await _theNews.FirstOrDefaultAsync(_=>_.Id==id);
+            return await _theNews.FirstOrDefaultAsync(_ => _.Id == id);
+        }
+
+        public async Task<List<GetTheNewDto>?> GetMostViewd()
+        {
+            var maxView = await _theNews.MaxAsync(_ => _.View);
+            var TheNews = await _theNews.Where(_ => _.View == maxView)
+                .Include(_ => _.Author).Select(theNew => new GetTheNewDto()
+                {
+                    Id = theNew.Id,
+                    Title = theNew.Title,
+                    Description = theNew.Description,
+                    Rate = theNew.Rate,
+                    View = theNew.View,
+                    AuthorName = theNew.Author.FullName
+                }).ToListAsync();
+            return TheNews;
+
         }
 
         public async Task<GetTheNewDto?> GetToIncreaseView(int id)
         {
-            var TheNew = await _theNews.Include(_=>_.Author).FirstOrDefaultAsync(_ => _.Id == id);
+            var TheNew = await _theNews.Include(_ => _.Author).FirstOrDefaultAsync(_ => _.Id == id);
 
             if (TheNew == null)
             {
                 return null;
             }
-            
+
             return new GetTheNewDto
             {
                 Id = TheNew.Id,
                 Title = TheNew.Title,
-                Description=TheNew.Description,
-                Rate=TheNew.Rate,
-                View=TheNew.View,
-                AuthorName=TheNew.Author.FullName
-                
+                Description = TheNew.Description,
+                Rate = TheNew.Rate,
+                View = TheNew.View,
+                AuthorName = TheNew.Author.FullName
+
             };
-           
+
         }
 
         public async Task IncreaseView(int id)
         {
-            var theNew = await _theNews.FirstOrDefaultAsync(_ => _.Id==id);
+            var theNew = await _theNews.FirstOrDefaultAsync(_ => _.Id == id);
             if (theNew != null)
             {
                 theNew.View++;
             }
-          
+
         }
 
         public async Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId)
