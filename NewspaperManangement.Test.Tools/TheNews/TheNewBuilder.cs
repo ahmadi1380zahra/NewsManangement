@@ -36,7 +36,12 @@ namespace NewspaperManangement.Test.Tools.TheNews
         {
             _theNew.Rate = rate;
             return this;
-        } 
+        }
+        public TheNewBuilder WithView(int view)
+        {
+            _theNew.View = view;
+            return this;
+        }
         public TheNewBuilder WithTheNewTags(int tagId)
         {
             _theNew.TheNewTags.Add(new TheNewTag

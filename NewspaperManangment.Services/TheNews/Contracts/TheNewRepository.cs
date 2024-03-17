@@ -13,6 +13,7 @@ namespace NewspaperManangment.Services.TheNews.Contracts
         void Add(TheNew theNew);
         void Delete(TheNew theNew);
         Task<TheNew?> Find(int id);
+        Task<List<GetTheNewDto>?> GetMostViewd();
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task IncreaseView(int id);
         Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);

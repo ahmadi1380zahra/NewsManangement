@@ -20,7 +20,7 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
             await _service.Add(dto);
         }
-        [HttpGet]
+        [HttpGet("ToIncreaseViews")]
         public async Task<GetTheNewDto?> GetToIncreaseViews([FromQuery]int id)
         {
           return  await _service.GetToIncreaseView(id);
@@ -29,6 +29,11 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         public async Task Delete([FromRoute] int id)
         {
              await _service.Delete(id);
+        }
+        [HttpGet("MostView")]
+        public async Task<List<GetTheNewDto>?> GetMostView()
+        {
+            return await _service.GetMostViewd();
         }
     }
 }
