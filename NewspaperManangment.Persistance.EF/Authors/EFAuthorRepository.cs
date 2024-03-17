@@ -26,7 +26,7 @@ namespace NewspaperManangment.Persistance.EF.Authors
 
         public void Delete(Author author)
         {
-           _authors.Remove(author);
+            _authors.Remove(author);
         }
 
         public async Task<Author?> Find(int id)
@@ -38,15 +38,29 @@ namespace NewspaperManangment.Persistance.EF.Authors
         {
             var authors = _authors.Select(author => new GetAuthorsDto
             {
-                Id=author.Id,
-                FullName=author.FullName,
+                Id = author.Id,
+                FullName = author.FullName,
             });
-            if (dto.FullName !=null)
+            if (dto.FullName != null)
             {
                 authors = authors.Where(_ => _.FullName.Replace(" ", string.Empty)
                 .Contains(dto.FullName.Replace(" ", string.Empty)));
             }
             return await authors.ToListAsync();
+        }
+
+        public async Task<List<GetAuthorsDto>?> GetMostViewed()
+        {
+            var maxView = await _authors.Include(_ => _.TheNews)
+                              .SelectMany(_ => _.TheNews)
+                              .MaxAsync(_ => _.View);
+           return await _authors.Include(_ => _.TheNews)
+                           .Where(_ => _.TheNews.Any(_ => _.View == maxView))
+                           .Select(author => new GetAuthorsDto
+                           {
+                               Id = author.Id,
+                               FullName = author.FullName
+                           }).ToListAsync();
         }
 
         public async Task<bool> IsExist(int id)
