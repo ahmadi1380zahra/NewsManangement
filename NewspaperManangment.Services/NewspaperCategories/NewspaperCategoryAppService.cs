@@ -69,5 +69,10 @@ namespace NewspaperManangment.Services.NewspaperCategories
             _repository.Delete(newspaperCategory);
           await  _unitOfWork.Complete();
         }
+
+        public async Task<GetNewspaperCategoryDto?> GetHighestNewsCount()
+        {
+            return await _repository.GetHighestNewsCount();
+        }
     }
 }

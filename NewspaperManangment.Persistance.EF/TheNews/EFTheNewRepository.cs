@@ -88,5 +88,18 @@ namespace NewspaperManangment.Persistance.EF.TheNews
                 .Where(_ => _.NewspaperCategoryId == newsPaperCategoryId)
                .SumAsync(_ => _.Rate);
         }
+
+        public async Task<int> TotalNewsRateInOneCategoryNewspaperExceptItSelf(int newsPaperCategoryId, int id)
+        {
+            return await _theNews
+                .Where(_ => _.NewspaperCategoryId == newsPaperCategoryId
+                && _.Id!=id)
+               .SumAsync(_ => _.Rate);
+        }
+
+        public void Update(TheNew theNew)
+        {
+           _theNews.Update(theNew);
+        }
     }
 }

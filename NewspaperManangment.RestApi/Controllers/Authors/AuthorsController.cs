@@ -39,5 +39,6 @@ namespace NewspaperManangment.RestApi.Controllers.Authors
         {
             return await _service.GetMostViewed();
         }
+
     }
 }

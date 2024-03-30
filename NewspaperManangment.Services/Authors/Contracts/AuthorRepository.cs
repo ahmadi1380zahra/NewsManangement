@@ -14,6 +14,7 @@ namespace NewspaperManangment.Services.Authors.Contracts
         void Delete(Author author);
         Task<Author?> Find(int id);
         Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto);
+       Task<List<GetAuthorsDto>?> GetHighestNewsCount();
         Task<List<GetAuthorsDto>?> GetMostViewed();
         Task<bool> IsExist(int id);
         void Update(Author author);

@@ -2,6 +2,7 @@
 using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Authors.Contracts;
 using NewspaperManangment.Services.Authors.Contracts.Dtos;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,18 @@ namespace NewspaperManangment.Persistance.EF.Authors
             }
             return await authors.ToListAsync();
         }
+
+        public async Task<List<GetAuthorsDto>?> GetHighestNewsCount()
+        {
+            var maxCount = await _authors.Include(_ => _.TheNews).MaxAsync(_ => _.TheNews.Count);
+            var authors=await _authors.Include(_ => _.TheNews).Where(_ => _.TheNews.Count == 3)
+                .Select(author => new GetAuthorsDto
+                {
+                    Id = author.Id,
+                    FullName = author.FullName
+                }).ToListAsync();
+            return authors;
+         }
 
         public async Task<List<GetAuthorsDto>?> GetMostViewed()
         {

@@ -42,7 +42,7 @@ namespace NewspaperManangment.Services.TheNews
             _newspaperCategoryRepository = newspaperCategoryRepository;
             _tagRepository = tagRepository;
             _categoryRepository = categoryRepository;
-            _newspaperRepository= newspaperRepository;
+            _newspaperRepository = newspaperRepository;
         }
 
         public async Task Add(AddTheNewDto dto)
@@ -51,7 +51,7 @@ namespace NewspaperManangment.Services.TheNews
             {
                 throw new AuthorIsNotExistException();
             }
-            if (dto.Rate <=0)
+            if (dto.Rate <= 0)
             {
                 throw new NewsRateShouldBeMoreThanZeroException();
             }
@@ -71,14 +71,14 @@ namespace NewspaperManangment.Services.TheNews
                 View = 0,
 
             };
-          
+
             var allowedCategory = await _categoryRepository.Find(allowedCategoryId);
             if (dto.Rate == allowedCategory!.Rate)
             {
                 throw new TheNewsRateCantBeEqualToCategoryRateItShouldBeLessException();
             }
             var totalNewsRateInCategoryNewsPaper = await _repository.TotalNewsRateInOneCategoryNewspaper(dto.NewsPaperCategoryId);
-            if(totalNewsRateInCategoryNewsPaper+dto.Rate> allowedCategory!.Rate)
+            if (totalNewsRateInCategoryNewsPaper + dto.Rate > allowedCategory!.Rate)
             {
                 throw new TheNewspaperCategoryIsFullException();
             }
@@ -107,19 +107,19 @@ namespace NewspaperManangment.Services.TheNews
 
         public async Task Delete(int id)
         {
-           var theNew=await _repository.Find(id);
-           if(theNew == null)
+            var theNew = await _repository.Find(id);
+            if (theNew == null)
             {
                 throw new TheNewIsNotExistedException();
             }
             var newsPaperCategory = await _newspaperCategoryRepository.Find(theNew.NewspaperCategoryId);
-            var newspaper=await _newspaperRepository.Find(newsPaperCategory!.NewspaperId);
+            var newspaper = await _newspaperRepository.Find(newsPaperCategory!.NewspaperId);
             if (newspaper!.PublishDate != null)
             {
                 throw new TheNewHasBeenPublishedYouCantDeleteItException();
             }
-                _repository.Delete(theNew);
-           await _unitOfWork.Complete();
+            _repository.Delete(theNew);
+            await _unitOfWork.Complete();
 
         }
 
@@ -133,6 +133,49 @@ namespace NewspaperManangment.Services.TheNews
             await _repository.IncreaseView(id);
             await _unitOfWork.Complete();
             return await _repository.GetToIncreaseView(id);
+        }
+
+        public async Task Update(int id, UpdateTheNewDto dto)
+        {
+            var theNew = await _repository.Find(id);
+            if (theNew == null)
+            {
+                throw new TheNewIsNotExistedException();
+            }
+            if (dto.Rate <= 0)
+            {
+                throw new NewsRateShouldBeMoreThanZeroException();
+            }
+            if (!await _authorRepository.IsExist(dto.AuthorId))
+            {
+                throw new AuthorIsNotExistException();
+            }
+            var newsPaperCategory = await _newspaperCategoryRepository.Find(dto.NewsPaperCategoryId);
+            if (newsPaperCategory == null)
+            {
+                throw new NewspaperCategoryIsNotExistException();
+            }
+            var totalNewsRateInCategoryNewsPaper =
+                await _repository.TotalNewsRateInOneCategoryNewspaperExceptItSelf
+                (dto.NewsPaperCategoryId, theNew.Id);
+            var allowedCategoryId = newsPaperCategory.CategoryId;
+          
+            var allowedCategory = await _categoryRepository.Find(allowedCategoryId);
+            if (dto.Rate == allowedCategory!.Rate)
+            {
+                throw new TheNewsRateCantBeEqualToCategoryRateItShouldBeLessException();
+            }
+            if (totalNewsRateInCategoryNewsPaper + dto.Rate > allowedCategory!.Rate)
+            {
+                throw new TheNewspaperCategoryIsFullException();
+            }
+            theNew.Title = dto.Title;
+            theNew.Description = dto.Description;
+            theNew.Rate = dto.Rate;
+            theNew.AuthorId = dto.AuthorId;
+            theNew.NewspaperCategoryId = dto.NewsPaperCategoryId;
+            _repository.Update(theNew);
+            await _unitOfWork.Complete();
         }
     }
 }
