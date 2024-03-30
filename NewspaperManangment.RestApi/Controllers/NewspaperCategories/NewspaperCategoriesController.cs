@@ -24,5 +24,6 @@ namespace NewspaperManangment.RestApi.Controllers.NewspaperCategories
         {
             await _service.Delete(id);
         }
+      
     }
 }

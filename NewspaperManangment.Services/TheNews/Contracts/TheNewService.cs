@@ -13,5 +13,6 @@ namespace NewspaperManangment.Services.TheNews.Contracts
         Task Delete(int id);
         Task<List<GetTheNewDto>?> GetMostViewd();
         Task<GetTheNewDto?> GetToIncreaseView(int id);
+        Task Update(int id, UpdateTheNewDto dto);
     }
 }

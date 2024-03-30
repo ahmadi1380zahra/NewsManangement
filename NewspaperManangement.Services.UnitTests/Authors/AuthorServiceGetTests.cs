@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangement.Services.UnitTests.Authors
 {
-    public class AuthorServiceGetTests:BusinessUnitTest
+    public class AuthorServiceGetTests : BusinessUnitTest
     {
         private readonly AuthorService _sut;
         public AuthorServiceGetTests()
@@ -90,16 +90,64 @@ namespace NewspaperManangement.Services.UnitTests.Authors
              .WithTheNewTags(tag1.Id)
             .Build();
             DbContext.Save(theNew2);
-        
+
 
             var authors = await _sut.GetMostViewed();
 
             authors.Count.Should().Be(1);
-            var author=authors.FirstOrDefault();
+            var author = authors.FirstOrDefault();
             author.Id.Should().Be(author1.Id);
             author.FullName.Should().Be(author1.FullName);
 
         }
+        [Fact]
+        public async Task GetHighestNewsCount_get_authors_that_have_highest_news_count()
+        {
+            var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
+            DbContext.Save(category);
+            var tag1 = new TagBuilder(category.Id).WithTitle("فوتبال").Build();
+            DbContext.Save(tag1);
+            var author1 = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author1);
+            var author2 = new AuthorBuilder().WithFullName("علی احمدی").Build();
+            DbContext.Save(author2);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع").Build();
+            DbContext.Save(newspaper);
+            var newspaperCategory = new NewspaperCategoryBuilder(category.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory);
+            var theNew1 = new TheNewBuilder(author2.Id, newspaperCategory.Id)
+                .WithTitle("پرسپولیس در لیگ")
+                .WithDesciption("پرسپولیس قهرمان لیگ شد")
+                .WithRate(5)
+                .WithView(10)
+                .WithTheNewTags(tag1.Id)
+             .Build();
+            DbContext.Save(theNew1);
+            var theNew2 = new TheNewBuilder(author1.Id, newspaperCategory.Id)
+             .WithTitle("استقلال در سوگ")
+             .WithDesciption("مربی استقلال مرد")
+             .WithRate(5)
+             .WithView(20)
+             .WithTheNewTags(tag1.Id)
+            .Build();
+            DbContext.Save(theNew2);
+            var theNew3 = new TheNewBuilder(author1.Id, newspaperCategory.Id)
+          .WithTitle("استقلال در سوگ")
+          .WithDesciption("بازیکن استقلال مرد")
+          .WithRate(5)
+          .WithView(20)
+          .WithTheNewTags(tag1.Id)
+          .Build();
+          DbContext.Save(theNew3);
 
+
+            var authors = await _sut.GetHighestNewsCount();
+
+            authors.Count.Should().Be(1);
+            var author = authors.FirstOrDefault();
+            author.Id.Should().Be(author1.Id);
+            author.FullName.Should().Be(author1.FullName);
+
+        }
     }
 }

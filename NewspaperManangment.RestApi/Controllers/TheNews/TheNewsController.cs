@@ -20,6 +20,11 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
             await _service.Add(dto);
         }
+        [HttpPatch("{id}")]
+        public async Task Update([FromRoute]int id,[FromBody] UpdateTheNewDto dto)
+        {
+            await _service.Update(id,dto);
+        }
         [HttpGet("ToIncreaseViews")]
         public async Task<GetTheNewDto?> GetToIncreaseViews([FromQuery]int id)
         {

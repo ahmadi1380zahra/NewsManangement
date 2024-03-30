@@ -1,4 +1,5 @@
 ﻿using NewspaperManangment.Entities;
+using NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace NewspaperManangment.Services.NewspaperCategories.Contracts
         void Delete(NewspaperCategory newspaperCategory);
         void DeleteCategoryForThisNewspaper(int id);
         Task<NewspaperCategory?> Find(int id);
+        Task<GetNewspaperCategoryDto?> GetHighestNewsCount();
         Task<bool> IsExist(int id);
         Task<bool> IsExistCategoryForThisNewspaper(int id);
         Task<bool> IsReduplicateCategoryIdForThisNewspaper(int newspaperId, int categoryId);

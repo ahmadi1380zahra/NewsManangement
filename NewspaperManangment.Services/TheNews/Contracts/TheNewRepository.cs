@@ -17,5 +17,7 @@ namespace NewspaperManangment.Services.TheNews.Contracts
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task IncreaseView(int id);
         Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);
+        Task<int> TotalNewsRateInOneCategoryNewspaperExceptItSelf(int newsPaperCategoryId, int id);
+        void Update(TheNew theNew);
     }
 }

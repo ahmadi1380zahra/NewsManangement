@@ -11,5 +11,6 @@ namespace NewspaperManangment.Services.NewspaperCategories.Contracts
     {
         Task Add(AddNewspaperCategoryDto dto);
         Task Delete(int id);
+        Task<GetNewspaperCategoryDto?> GetHighestNewsCount();
     }
 }

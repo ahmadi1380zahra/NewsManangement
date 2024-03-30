@@ -48,6 +48,11 @@ namespace NewspaperManangment.Services.Authors
             return await _repository.GetAll(dto);
         }
 
+        public async Task<List<GetAuthorsDto>?> GetHighestNewsCount()
+        {
+            return await _repository.GetHighestNewsCount();
+        }
+
         public async Task<List<GetAuthorsDto>?> GetMostViewed()
         {
             return await _repository.GetMostViewed();
