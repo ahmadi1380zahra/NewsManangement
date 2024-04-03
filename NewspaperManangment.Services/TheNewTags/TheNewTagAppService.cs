@@ -76,5 +76,10 @@ namespace NewspaperManangment.Services.TheNewTags
             _repository.Delete(theNewTag);
             await _unitOfWork.Complete();
         }
+
+        public async Task<List<GetTheNewTagDto>?> GetTags(int theNewId)
+        {
+            return await _repository.GetTags(theNewId);
+        }
     }
 }

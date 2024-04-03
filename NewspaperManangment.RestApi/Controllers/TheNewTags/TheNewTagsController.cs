@@ -24,5 +24,10 @@ namespace NewspaperManangment.RestApi.Controllers.TheNewTags
         {
             await _service.Delete(id);
         }
+        [HttpGet("{theNewId}")]
+        public async Task<List<GetTheNewTagDto>?> GetTags([FromRoute]int theNewId)
+        {
+            return await _service.GetTags(theNewId);
+        }
     }
 }
