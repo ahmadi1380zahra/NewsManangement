@@ -39,7 +39,8 @@ namespace NewspaperManangment.Persistance.EF.Tags
             IQueryable<Tag> query = _tags;
             if (dto.Title != null)
             {
-                query = query.Where(_ => _.Title.Replace(" ", string.Empty).Contains(dto.Title.Replace(" ", string.Empty)));
+                query = query.Where(_ => _.Title.Replace(" ", string.Empty)
+                .Contains(dto.Title.Replace(" ", string.Empty)));
             };
             List<GetTagDto> tags = await query.Include(_=>_.Category).Select(tag => new GetTagDto
             {
@@ -48,6 +49,7 @@ namespace NewspaperManangment.Persistance.EF.Tags
                 Category = tag.Category.Title,
             }).ToListAsync();
             return tags;
+        
         }
 
         public async Task<bool> IsExist(int id)

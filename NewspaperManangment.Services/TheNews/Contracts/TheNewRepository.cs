@@ -16,6 +16,7 @@ namespace NewspaperManangment.Services.TheNews.Contracts
         Task<List<GetTheNewDto>?> GetMostViewd();
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task IncreaseView(int id);
+        Task<bool> IsExist(int id);
         Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId);
         Task<int> TotalNewsRateInOneCategoryNewspaperExceptItSelf(int newsPaperCategoryId, int id);
         void Update(TheNew theNew);
