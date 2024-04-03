@@ -10,5 +10,7 @@ namespace NewspaperManangment.Services.TheNewTags.Contracts
     public interface TheNewTagRepository
     {
         void Add(TheNewTag theNewTag);
+        void Delete(TheNewTag theNewTag);
+        Task<TheNewTag?> Find(int id);
     }
 }

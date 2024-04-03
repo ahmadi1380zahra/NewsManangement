@@ -21,5 +21,15 @@ namespace NewspaperManangment.Persistance.EF.TheNewTags
         {
             _theNewTags.Add(theNewTag);
         }
+
+        public void Delete(TheNewTag theNewTag)
+        {
+          _theNewTags.Remove(theNewTag);
+        }
+
+        public async Task<TheNewTag?> Find(int id)
+        {
+          return await  _theNewTags.FirstOrDefaultAsync(_ => _.Id == id);
+        }
     }
 }
