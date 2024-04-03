@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
+﻿using NewspaperManangment.Services.TheNews.Contracts.Dtos;
+using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace NewspaperManangment.Services.TheNewTags.Contracts
     {
         Task Add(AddTheNewTagDto dto);
         Task Delete(int id);
+        Task<List<GetTheNewTagDto>?> GetTags(int theNewId);
     }
 }

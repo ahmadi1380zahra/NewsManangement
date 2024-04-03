@@ -1,4 +1,5 @@
 ﻿using NewspaperManangment.Entities;
+using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace NewspaperManangment.Services.TheNewTags.Contracts
         void Add(TheNewTag theNewTag);
         void Delete(TheNewTag theNewTag);
         Task<TheNewTag?> Find(int id);
+        Task<List<GetTheNewTagDto>?> GetTags(int id);
     }
 }
