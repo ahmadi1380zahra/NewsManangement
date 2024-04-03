@@ -12,12 +12,17 @@ namespace NewspaperManangment.RestApi.Controllers.TheNewTags
         private readonly TheNewTagService _service;
         public TheNewTagsController(TheNewTagService service)
         {
-                _service = service;
+            _service = service;
         }
         [HttpPost]
-        public async Task Add([FromBody]AddTheNewTagDto dto)
+        public async Task Add([FromBody] AddTheNewTagDto dto)
         {
             await _service.Add(dto);
+        }
+        [HttpDelete("{id}")]
+        public async Task Delete([FromRoute]int id)
+        {
+            await _service.Delete(id);
         }
     }
 }

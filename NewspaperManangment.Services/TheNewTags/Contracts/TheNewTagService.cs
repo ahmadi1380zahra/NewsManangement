@@ -10,5 +10,6 @@ namespace NewspaperManangment.Services.TheNewTags.Contracts
     public interface TheNewTagService
     {
         Task Add(AddTheNewTagDto dto);
+        Task Delete(int id);
     }
 }
