@@ -53,7 +53,7 @@ namespace NewspaperManangment.Persistance.EF.Authors
         public async Task<List<GetAuthorsDto>?> GetHighestNewsCount()
         {
             var maxCount = await _authors.Include(_ => _.TheNews).MaxAsync(_ => _.TheNews.Count);
-            var authors=await _authors.Include(_ => _.TheNews).Where(_ => _.TheNews.Count == 3)
+            var authors=await _authors.Include(_ => _.TheNews).Where(_ => _.TheNews.Count == maxCount)
                 .Select(author => new GetAuthorsDto
                 {
                     Id = author.Id,

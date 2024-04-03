@@ -8,6 +8,7 @@ using NewspaperManangment.Persistance.EF.NewspaperCategories;
 using NewspaperManangment.Persistance.EF.Newspapers;
 using NewspaperManangment.Persistance.EF.Tags;
 using NewspaperManangment.Persistance.EF.TheNews;
+using NewspaperManangment.Persistance.EF.TheNewTags;
 using NewspaperManangment.Services.Authors;
 using NewspaperManangment.Services.Authors.Contracts;
 using NewspaperManangment.Services.Catgories;
@@ -20,6 +21,8 @@ using NewspaperManangment.Services.Tags;
 using NewspaperManangment.Services.Tags.Contracts;
 using NewspaperManangment.Services.TheNews;
 using NewspaperManangment.Services.TheNews.Contracts;
+using NewspaperManangment.Services.TheNewTags;
+using NewspaperManangment.Services.TheNewTags.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,8 @@ builder.Services.AddScoped<NewspaperCategoryService, NewspaperCategoryAppService
 builder.Services.AddScoped<NewspaperCategoryRepository, EFNewspaperCategoryRepository>();
 builder.Services.AddScoped<TheNewService, TheNewAppService>();
 builder.Services.AddScoped<TheNewRepository, EFTheNewRepository>();
+builder.Services.AddScoped<TheNewTagRepository,EFTheNewTagRepository>();
+builder.Services.AddScoped<TheNewTagService, TheNewTagAppService>();
 builder.Services.AddScoped<DateTimeService, DateTimeAppService>();
 var app = builder.Build();
 

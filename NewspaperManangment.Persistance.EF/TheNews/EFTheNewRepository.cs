@@ -82,6 +82,11 @@ namespace NewspaperManangment.Persistance.EF.TheNews
 
         }
 
+        public async Task<bool> IsExist(int id)
+        {
+            return await _theNews.AnyAsync(x => x.Id == id); 
+        }
+
         public async Task<int> TotalNewsRateInOneCategoryNewspaper(int newsPaperCategoryId)
         {
             return await _theNews
@@ -93,13 +98,13 @@ namespace NewspaperManangment.Persistance.EF.TheNews
         {
             return await _theNews
                 .Where(_ => _.NewspaperCategoryId == newsPaperCategoryId
-                && _.Id!=id)
+                && _.Id != id)
                .SumAsync(_ => _.Rate);
         }
 
         public void Update(TheNew theNew)
         {
-           _theNews.Update(theNew);
+            _theNews.Update(theNew);
         }
     }
 }
