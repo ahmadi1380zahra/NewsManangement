@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos
 {
-    public class GetNewspaperCategoryDto
+    public class GetNewspaperCategoryWithHighestNewsCountDto
     {
         public int Id { get; set; }
-        public string CategoryTitle { get; set; }
+        public string CategoryName { get; set; }
+        public string NewspaperName { get; set; }
     }
 }

@@ -70,7 +70,12 @@ namespace NewspaperManangment.Services.NewspaperCategories
           await  _unitOfWork.Complete();
         }
 
-        public async Task<GetNewspaperCategoryDto?> GetHighestNewsCount()
+        public async Task<List<GetNewspaperCategoryDto>?> GetCategories(int newspaperId)
+        {
+            return await _repository.GetCategories(newspaperId);
+        }
+
+        public async Task<GetNewspaperCategoryWithHighestNewsCountDto?> GetHighestNewsCount()
         {
             return await _repository.GetHighestNewsCount();
         }

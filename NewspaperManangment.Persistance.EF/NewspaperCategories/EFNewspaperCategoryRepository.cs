@@ -40,14 +40,27 @@ namespace NewspaperManangment.Persistance.EF.NewspaperCategories
             return await _newspaperCategories.FirstOrDefaultAsync(_ => _.Id == id);
         }
 
-        public async Task<GetNewspaperCategoryDto?> GetHighestNewsCount()
+        public async Task<List<GetNewspaperCategoryDto>?> GetCategories(int newspaperId)
+        {
+           
+           return await _newspaperCategories
+                .Include(_ => _.Category).Where(_ => _.NewspaperId == newspaperId)
+                .Select(_ => new GetNewspaperCategoryDto
+                {
+                    Id=_.Id,
+                    CategoryTitle=_.Category.Title,
+                }).ToListAsync();
+            
+        }
+
+        public async Task<GetNewspaperCategoryWithHighestNewsCountDto?> GetHighestNewsCount()
         {
             var highestNewsCount =await _newspaperCategories
                  .Select(_ => _.TheNews.Count).MaxAsync();
             var highestNewsCountCategory = await _newspaperCategories.Include(_ => _.Newspaper)
                  .Include(_ => _.Category)
                  .Where(_=>_.TheNews.Count==highestNewsCount)
-                 .Select(newspaperCategory=>new GetNewspaperCategoryDto
+                 .Select(newspaperCategory=>new GetNewspaperCategoryWithHighestNewsCountDto
                  {
                      Id=newspaperCategory.Id,
                      CategoryName=newspaperCategory.Category.Title,

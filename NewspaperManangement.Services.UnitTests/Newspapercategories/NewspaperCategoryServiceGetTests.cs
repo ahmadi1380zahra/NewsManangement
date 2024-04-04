@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangement.Services.UnitTests.Newspapercategories
 {
-    public class NewspaperCategoryServiceGetTests:BusinessUnitTest
+    public class NewspaperCategoryServiceGetTests : BusinessUnitTest
     {
         private readonly NewspaperCategoryService _sut;
         public NewspaperCategoryServiceGetTests()
@@ -68,6 +68,35 @@ namespace NewspaperManangement.Services.UnitTests.Newspapercategories
             newspaperCategory.Id.Should().Be(newspaperCategory1.Id);
             newspaperCategory.CategoryName.Should().Be(category.Title);
             newspaperCategory.NewspaperName.Should().Be(newspaper.Title);
+        }
+        [Fact]
+        public async Task GetCategories_gets_all_newspaperCategories_by_newspaperId()
+        {
+            var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
+            DbContext.Save(category);
+            var category2 = new CategoryBuilder().WithRate(20).WithTitle("سیاسی").Build();
+            DbContext.Save(category2);
+            var tag1 = new TagBuilder(category.Id).WithTitle("فوتبال").Build();
+            DbContext.Save(tag1);
+            var author = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع").Build();
+            DbContext.Save(newspaper);
+            var newspaperCategory1 = new NewspaperCategoryBuilder(category.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory1);
+            var newspaperCategory2 = new NewspaperCategoryBuilder(category2.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory2);
+
+            var actual =await _sut.GetCategories(newspaper.Id);
+
+            actual.Count().Should().Be(2);
+            var newsCategory= actual.FirstOrDefault(_=>_.Id== newspaperCategory1.Id);
+            newsCategory.Id.Should().Be(newspaperCategory1.Id);
+            newsCategory.CategoryTitle.Should().Be(category.Title);
+            var newsCategory2 = actual.FirstOrDefault(_ => _.Id == newspaperCategory2.Id);
+            newsCategory2.Id.Should().Be(newspaperCategory2.Id);
+            newsCategory2.CategoryTitle.Should().Be(category2.Title);
+
         }
     }
 }
