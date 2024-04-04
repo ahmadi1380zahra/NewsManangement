@@ -81,5 +81,6 @@ namespace NewspaperManangment.Services.TheNewTags
         {
             return await _repository.GetTags(theNewId);
         }
+
     }
 }

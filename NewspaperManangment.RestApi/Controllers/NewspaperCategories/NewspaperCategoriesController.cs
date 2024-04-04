@@ -24,6 +24,10 @@ namespace NewspaperManangment.RestApi.Controllers.NewspaperCategories
         {
             await _service.Delete(id);
         }
-      
+        [HttpGet("{newspaperId}")]
+        public async Task<List<GetNewspaperCategoryDto>?> GetCategories([FromRoute]int newspaperId)
+        {
+            return await _service.GetCategories(newspaperId);
+        }
     }
 }
