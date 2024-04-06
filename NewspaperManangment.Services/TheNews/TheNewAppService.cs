@@ -123,6 +123,11 @@ namespace NewspaperManangment.Services.TheNews
 
         }
 
+        public async Task<List<GetAllTheNewDto>?> GetAll(GetTheNewFilterDto dto)
+        {
+          return await _repository.GetAll(dto);
+        }
+
         public async Task<List<GetTheNewDto>?> GetMostViewd()
         {
             return await _repository.GetMostViewd();

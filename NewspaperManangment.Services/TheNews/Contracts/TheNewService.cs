@@ -11,6 +11,7 @@ namespace NewspaperManangment.Services.TheNews.Contracts
     {
         Task Add(AddTheNewDto dto);
         Task Delete(int id);
+        Task<List<GetAllTheNewDto>?> GetAll(GetTheNewFilterDto dto);
         Task<List<GetTheNewDto>?> GetMostViewd();
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task Update(int id, UpdateTheNewDto dto);
