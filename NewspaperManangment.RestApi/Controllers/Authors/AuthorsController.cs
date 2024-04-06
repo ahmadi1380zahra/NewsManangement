@@ -34,6 +34,11 @@ namespace NewspaperManangment.RestApi.Controllers.Authors
         {
            return await _service.GetAll(dto);
         }
+        [HttpGet("Get")]
+        public async Task<GetAuthorsDto>? Get([FromQuery] int id)
+        {
+            return await _service.Get(id);
+        }
         [HttpGet("MostViewed")]
         public async Task<List<GetAuthorsDto>?> MostViewed()
         {

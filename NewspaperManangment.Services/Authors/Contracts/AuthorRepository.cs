@@ -13,6 +13,7 @@ namespace NewspaperManangment.Services.Authors.Contracts
         void Add(Author author);
         void Delete(Author author);
         Task<Author?> Find(int id);
+        Task<GetAuthorsDto?> Get(int id);
         Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto);
        Task<List<GetAuthorsDto>?> GetHighestNewsCount();
         Task<List<GetAuthorsDto>?> GetMostViewed();

@@ -27,6 +27,20 @@ namespace NewspaperManangement.Services.UnitTests.Authors
             _sut = AuthorServiceFactory.Create(SetupContext);
         }
         [Fact]
+        public async Task Get_gets_an_author_by_Id()
+        {
+            var author1 = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author1);
+            var author2 = new AuthorBuilder().WithFullName("نیلوفر حقیقت").Build();
+            DbContext.Save(author2);
+
+
+            var actual = await _sut.Get(author1.Id);
+
+            actual.Id.Should().Be(author1.Id);
+            actual.FullName.Should().Be(author1.FullName);
+        }
+        [Fact]
         public async Task Get_gets_all_authors_with_valid_data()
         {
             var author1 = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
@@ -138,7 +152,7 @@ namespace NewspaperManangement.Services.UnitTests.Authors
           .WithView(20)
           .WithTheNewTags(tag1.Id)
           .Build();
-          DbContext.Save(theNew3);
+            DbContext.Save(theNew3);
 
 
             var authors = await _sut.GetHighestNewsCount();
