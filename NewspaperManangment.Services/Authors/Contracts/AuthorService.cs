@@ -11,6 +11,7 @@ namespace NewspaperManangment.Services.Authors.Contracts
     {
         Task Add(AddAuthorDto dto);
         Task Delete(int id);
+        Task<GetAuthorsDto?> Get(int id);
         Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto);
         Task<List<GetAuthorsDto>?> GetHighestNewsCount();
         Task<List<GetAuthorsDto>?> GetMostViewed();

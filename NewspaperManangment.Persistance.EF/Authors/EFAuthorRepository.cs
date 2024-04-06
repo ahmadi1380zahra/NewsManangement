@@ -35,6 +35,28 @@ namespace NewspaperManangment.Persistance.EF.Authors
             return await _authors.FirstOrDefaultAsync(_ => _.Id == id);
         }
 
+        public async Task<GetAuthorsDto?> Get(int id)
+        {
+            var author =await _authors.FirstOrDefaultAsync(_ => _.Id == id);
+            if (author == null)
+            {
+                return null;
+            }
+            return  new GetAuthorsDto
+            {
+                Id = author.Id,
+                FullName = author.FullName,
+            };
+            //return await _authors.FirstOrDefault(_ => _.Id == id)
+            //     .Select(_ => new GetAuthorsDto
+            //     {
+            //         Id = id,
+            //         FullName= _.FullName,
+            //     });
+
+
+        }
+
         public async Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto)
         {
             var authors = _authors.Select(author => new GetAuthorsDto

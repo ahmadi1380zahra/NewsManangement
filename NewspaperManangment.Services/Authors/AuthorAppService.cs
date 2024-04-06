@@ -43,6 +43,11 @@ namespace NewspaperManangment.Services.Authors
             await _unitOfWork.Complete();
         }
 
+        public async Task<GetAuthorsDto?> Get(int id)
+        {
+           return await _repository.Get(id);
+        }
+
         public async Task<List<GetAuthorsDto>?> GetAll(GetAuthorsFilterDto? dto)
         {
             return await _repository.GetAll(dto);
