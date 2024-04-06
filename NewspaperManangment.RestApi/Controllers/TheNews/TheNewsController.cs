@@ -35,6 +35,11 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
              await _service.Delete(id);
         }
+        [HttpGet]
+        public async Task<List<GetAllTheNewDto>?> GetAll([FromQuery]GetTheNewFilterDto dto)
+        {
+            return await _service.GetAll(dto);
+        }
         [HttpGet("MostView")]
         public async Task<List<GetTheNewDto>?> GetMostView()
         {
