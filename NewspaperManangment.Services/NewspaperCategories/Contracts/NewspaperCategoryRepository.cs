@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Entities;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Entities;
 using NewspaperManangment.Services.NewspaperCategories.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.NewspaperCategories.Contracts
 {
-    public interface NewspaperCategoryRepository
+    public interface NewspaperCategoryRepository:Repository
     {
         void Add(NewspaperCategory newspaperCategory);
         void Delete(NewspaperCategory newspaperCategory);

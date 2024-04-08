@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Entities;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Entities;
 using NewspaperManangment.Services.Newspapers.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.Newspapers.Contracts
 {
-    public interface NewspaperRepository
+    public interface NewspaperRepository:Repository
     {
         void Add(Newspaper newspaper);
         void Delete(Newspaper newspaper);

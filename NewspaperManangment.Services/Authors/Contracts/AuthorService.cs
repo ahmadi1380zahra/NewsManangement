@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Services.Authors.Contracts.Dtos;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Services.Authors.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.Authors.Contracts
 {
-    public interface AuthorService
+    public interface AuthorService: Service
     {
         Task Add(AddAuthorDto dto);
         Task Delete(int id);

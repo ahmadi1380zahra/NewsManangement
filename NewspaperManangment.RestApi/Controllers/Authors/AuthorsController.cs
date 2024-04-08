@@ -44,6 +44,11 @@ namespace NewspaperManangment.RestApi.Controllers.Authors
         {
             return await _service.GetMostViewed();
         }
+        [HttpGet("GetHighestNewsCount")]
+        public async Task<List<GetAuthorsDto>?> GetHighestNewsCount()
+        {
+            return await _service.GetHighestNewsCount();
+        }
 
     }
 }
