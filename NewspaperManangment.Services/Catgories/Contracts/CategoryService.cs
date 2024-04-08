@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Services.Catgories.Contracts.Dtos;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Services.Catgories.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.Catgories.Contracts
 {
-    public interface CategoryService
+    public interface CategoryService:Service
     {
         Task Add(AddCategoryDto dto);
         Task Delete(int id);

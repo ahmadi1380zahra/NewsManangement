@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Entities;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Entities;
 using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.TheNewTags.Contracts
 {
-    public interface TheNewTagRepository
+    public interface TheNewTagRepository:Repository
     {
         void Add(TheNewTag theNewTag);
         void Delete(TheNewTag theNewTag);

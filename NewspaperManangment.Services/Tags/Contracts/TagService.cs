@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Services.Tags.Contracts.Dtos;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Services.Tags.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.Tags.Contracts
 {
-    public interface TagService
+    public interface TagService:Service
     {
         Task Add(AddTagDto dto);
         Task Delete(int id);

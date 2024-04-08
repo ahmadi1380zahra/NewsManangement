@@ -37,22 +37,22 @@ namespace NewspaperManangment.Persistance.EF.Authors
 
         public async Task<GetAuthorsDto?> Get(int id)
         {
-            var author =await _authors.FirstOrDefaultAsync(_ => _.Id == id);
-            if (author == null)
-            {
-                return null;
-            }
-            return  new GetAuthorsDto
-            {
-                Id = author.Id,
-                FullName = author.FullName,
-            };
-            //return await _authors.FirstOrDefault(_ => _.Id == id)
-            //     .Select(_ => new GetAuthorsDto
-            //     {
-            //         Id = id,
-            //         FullName= _.FullName,
-            //     });
+            //var author =await _authors.FirstOrDefaultAsync(_ => _.Id == id);
+            //if (author == null)
+            //{
+            //    return null;
+            //}
+            //return  new GetAuthorsDto
+            //{
+            //    Id = author.Id,
+            //    FullName = author.FullName,
+            //};
+            return await _authors
+                 .Select(_ => new GetAuthorsDto
+                 {
+                     Id = id,
+                     FullName = _.FullName,
+                 }).FirstOrDefaultAsync(_ => _.Id == id);
 
 
         }
@@ -74,7 +74,7 @@ namespace NewspaperManangment.Persistance.EF.Authors
 
         public async Task<List<GetAuthorsDto>?> GetHighestNewsCount()
         {
-            var maxCount = await _authors.Include(_ => _.TheNews).MaxAsync(_ => _.TheNews.Count);
+            var maxCount = await _authors.Select(_=>_.TheNews.Count()).OrderDescending().FirstOrDefaultAsync();
             var authors=await _authors.Include(_ => _.TheNews).Where(_ => _.TheNews.Count == maxCount)
                 .Select(author => new GetAuthorsDto
                 {

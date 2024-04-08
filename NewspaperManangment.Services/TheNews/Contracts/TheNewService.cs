@@ -1,4 +1,5 @@
-﻿using NewspaperManangment.Services.TheNews.Contracts.Dtos;
+﻿using NewspaperManangment.Contracts.Interfaces;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperManangment.Services.TheNews.Contracts
 {
-    public interface TheNewService
+    public interface TheNewService:Service
     {
         Task Add(AddTheNewDto dto);
         Task Delete(int id);
