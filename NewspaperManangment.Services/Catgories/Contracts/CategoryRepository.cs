@@ -15,6 +15,7 @@ namespace NewspaperManangment.Services.Catgories.Contracts
         void Delete(Category category);
         Task<Category?> Find(int id);
         Task<List<GetCategoryDto>?> GetAll(GetCategoryFilterDto? dto);
+        Task<List<GetCategoryWithTagsDto>?> GetWithTags(GetCategoryFilterDto? dto);
         Task<bool> IsExist(int id);
         void Update(Category category);
     }

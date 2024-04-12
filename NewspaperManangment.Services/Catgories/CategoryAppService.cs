@@ -53,6 +53,11 @@ namespace NewspaperManangment.Services.Catgories
             return await _repository.GetAll(dto);
         }
 
+        public async Task<List<GetCategoryWithTagsDto>?> GetWithTags(GetCategoryFilterDto? dto)
+        {
+            return await _repository.GetWithTags(dto);
+        }
+
         public async Task Update(int id, UpdateCategoryDto dto)
         {
             if (dto.Rate <= 0)

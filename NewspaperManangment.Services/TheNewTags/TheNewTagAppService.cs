@@ -5,6 +5,7 @@ using NewspaperManangment.Services.NewspaperCategories.Contracts;
 using NewspaperManangment.Services.Tags.Contracts;
 using NewspaperManangment.Services.Tags.Exceptions;
 using NewspaperManangment.Services.TheNews.Contracts;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using NewspaperManangment.Services.TheNews.Exceptions;
 using NewspaperManangment.Services.TheNewTags.Contracts;
 using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
@@ -76,6 +77,8 @@ namespace NewspaperManangment.Services.TheNewTags
             _repository.Delete(theNewTag);
             await _unitOfWork.Complete();
         }
+
+     
 
         public async Task<List<GetTheNewTagDto>?> GetTags(int theNewId)
         {

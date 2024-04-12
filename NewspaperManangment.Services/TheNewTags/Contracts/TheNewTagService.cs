@@ -13,6 +13,7 @@ namespace NewspaperManangment.Services.TheNewTags.Contracts
     {
         Task Add(AddTheNewTagDto dto);
         Task Delete(int id);
+  
         Task<List<GetTheNewTagDto>?> GetTags(int theNewId);
     }
 }

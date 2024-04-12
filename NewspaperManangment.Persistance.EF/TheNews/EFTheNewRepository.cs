@@ -53,6 +53,32 @@ namespace NewspaperManangment.Persistance.EF.TheNews
                return await theNews.ToListAsync();
         }
 
+        public async Task<List<GetAllTheNewWithTagDto>?> GetAllWithTags(GetTheNewFilterDto dto)
+        {
+            var theNews = _theNews.Include(_ => _.TheNewTags)
+                .ThenInclude(_ => _.Tag)
+                .ThenInclude(_ => _.Category)
+                .Select(_ => new GetAllTheNewWithTagDto
+                {
+                    Id = _.Id,
+                    Title = _.Title,
+                    Description = _.Description,
+                    TheNewWithTags = _.TheNewTags.Select(t=>new GetTagsOfTheNewDto
+                    {
+                        Id=t.Tag.Id,
+                        Title=t.Tag.Title,
+                        CategoryTitle=t.Tag.Category.Title
+                    }).ToList()
+                  
+                });
+            if (dto.Title != null)
+            {
+                theNews = theNews.Where
+                    (_ => _.Title.Replace(" ", "").Contains(dto.Title.Replace(" ", "")));
+            }
+            return await theNews.ToListAsync();
+        }
+
         public async Task<List<GetTheNewDto>?> GetMostViewd()
         {
             var maxView = await _theNews.MaxAsync(_ => _.View);

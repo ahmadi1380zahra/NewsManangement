@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewspaperManangment.Entities;
+using NewspaperManangment.Services.TheNews.Contracts.Dtos;
 using NewspaperManangment.Services.TheNewTags.Contracts;
 using NewspaperManangment.Services.TheNewTags.Contracts.Dtos;
 using System;
@@ -32,6 +33,8 @@ namespace NewspaperManangment.Persistance.EF.TheNewTags
         {
             return await _theNewTags.FirstOrDefaultAsync(_ => _.Id == id);
         }
+
+      
 
         public async Task<List<GetTheNewTagDto>?> GetTags(int theNewId)
         {

@@ -50,6 +50,24 @@ namespace NewspaperManangment.Persistance.EF.Categories
 
         }
 
+        public async Task<List<GetCategoryWithTagsDto>?> GetWithTags(GetCategoryFilterDto? dto)
+        {
+            var query = _categories.Include(_=>_.Tags)
+                .Select(_ => new GetCategoryWithTagsDto
+            {
+                Id = _.Id,
+                Title = _.Title,
+                Rate = _.Rate,
+                TagTitles = _.Tags.Select(t => t.Title).ToList(),
+
+                });
+            if (dto.Title != null)
+            {
+                query = query.Where(_ => _.Title.Replace(" ", string.Empty).Contains(dto.Title.Replace(" ", string.Empty)));
+            };
+            return await query.ToListAsync();
+        }
+
         public async Task<bool> IsExist(int id)
         {
          return await _categories.AnyAsync(_ => _.Id == id);

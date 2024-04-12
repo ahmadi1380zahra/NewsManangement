@@ -40,6 +40,11 @@ namespace NewspaperManangment.RestApi.Controllers.TheNews
         {
             return await _service.GetAll(dto);
         }
+        [HttpGet("GetAllWithTags")]
+        public async Task<List<GetAllTheNewWithTagDto>?> GetAllWithTags([FromQuery] GetTheNewFilterDto dto)
+        {
+            return await _service.GetAllWithTags(dto);
+        }
         [HttpGet("MostView")]
         public async Task<List<GetTheNewDto>?> GetMostView()
         {

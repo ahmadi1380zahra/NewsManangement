@@ -28,6 +28,42 @@ namespace NewspaperManangement.Services.UnitTests.TheNews
             _sut = TheNewServiceFactory.Create(SetupContext);
         }
         [Fact]
+        public async Task GetAllWithTags_gets_all_theNews_with_tags()
+        {
+            var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
+            DbContext.Save(category);
+            var tag1 = new TagBuilder(category.Id).WithTitle("فوتبال").Build();
+            DbContext.Save(tag1);
+            var tag2 = new TagBuilder(category.Id).WithTitle(" چمن فوتبال").Build();
+            DbContext.Save(tag2);
+            var author = new AuthorBuilder().WithFullName("زهرااحمدی").Build();
+            DbContext.Save(author);
+            var newspaper = new NewspaperBuilder().WithTitle("طلوع").Build();
+            DbContext.Save(newspaper);
+            var newspaperCategory = new NewspaperCategoryBuilder(category.Id, newspaper.Id).Build();
+            DbContext.Save(newspaperCategory);
+            var theNew1 = new TheNewBuilder(author.Id, newspaperCategory.Id)
+                .WithTitle("پرسپولیس در لیگ")
+                .WithDesciption("پرسپولیس قهرمان لیگ شد")
+                .WithRate(15)
+                .WithTheNewTags(tag1.Id)
+                .WithTheNewTags(tag2.Id)
+             .Build();
+            DbContext.Save(theNew1);
+            var dto = GetTheNewFilterDtoFactory.Create(null);
+
+            var actual = await _sut.GetAllWithTags(dto);
+
+            var theNew = actual.FirstOrDefault(_ => _.Id == theNew1.Id);
+            theNew.Id.Should().Be(theNew1.Id);
+            theNew.Title.Should().Be(theNew1.Title);
+            theNew.Description.Should().Be(theNew1.Description);
+            var theNewFirstTag = theNew.TheNewWithTags[0];
+            theNewFirstTag.Title.Should().Be(tag1.Title);
+            theNewFirstTag.Id.Should().Be(tag1.Id);
+            theNewFirstTag.CategoryTitle.Should().Be(tag1.Category.Title);
+        }
+        [Fact]
         public async Task GetAll_gets_all_theNews_with_valid_data()
         {
             var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
@@ -56,7 +92,7 @@ namespace NewspaperManangement.Services.UnitTests.TheNews
             DbContext.Save(theNew2);
             var dto = GetTheNewFilterDtoFactory.Create(null);
 
-            var actual =await _sut.GetAll(dto);
+            var actual = await _sut.GetAll(dto);
 
             var theNew = actual.FirstOrDefault(_ => _.Id == theNew1.Id);
             theNew.Id.Should().Be(theNew1.Id);
@@ -77,7 +113,7 @@ namespace NewspaperManangement.Services.UnitTests.TheNews
         }
         [Theory]
         [InlineData("پرسپولیس در لیگ", "پرس")]
-        public async Task GetAll_gets_theNews_with_valid_data_by_title_filter(string title,string filter)
+        public async Task GetAll_gets_theNews_with_valid_data_by_title_filter(string title, string filter)
         {
             var category = new CategoryBuilder().WithRate(20).WithTitle("ورزشی").Build();
             DbContext.Save(category);

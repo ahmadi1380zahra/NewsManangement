@@ -13,6 +13,7 @@ namespace NewspaperManangment.Services.Catgories.Contracts
         Task Add(AddCategoryDto dto);
         Task Delete(int id);
         Task<List<GetCategoryDto>?> GetAll(GetCategoryFilterDto? dto);
+        Task<List<GetCategoryWithTagsDto>?> GetWithTags(GetCategoryFilterDto? dto);
         Task Update(int id, UpdateCategoryDto dto);
     }
 }
