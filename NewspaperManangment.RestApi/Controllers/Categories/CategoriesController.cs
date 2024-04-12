@@ -34,5 +34,10 @@ namespace NewspaperManangment.RestApi.Controllers.Categories
         {
             return await _service.GetAll(dto);
         }
+        [HttpGet("GetWithTags")]
+        public async Task<List<GetCategoryWithTagsDto>?> GetWithTags([FromQuery] GetCategoryFilterDto? dto)
+        {
+            return await _service.GetWithTags(dto);
+        }
     }
 }

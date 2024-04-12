@@ -24,6 +24,7 @@ namespace NewspaperManangement.Services.UnitTests.TheNewTags
         {
             _sut = TheNewTagServiceFactory.Create(SetupContext);
         }
+       
         [Fact]
         public async Task GetTags_get_all_news_tags_by_newsId()
         {

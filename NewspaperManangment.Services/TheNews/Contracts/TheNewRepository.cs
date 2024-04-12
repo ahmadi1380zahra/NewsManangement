@@ -15,6 +15,7 @@ namespace NewspaperManangment.Services.TheNews.Contracts
         void Delete(TheNew theNew);
         Task<TheNew?> Find(int id);
         Task<List<GetAllTheNewDto>?> GetAll(GetTheNewFilterDto dto);
+        Task<List<GetAllTheNewWithTagDto>?> GetAllWithTags(GetTheNewFilterDto dto);
         Task<List<GetTheNewDto>?> GetMostViewd();
         Task<GetTheNewDto?> GetToIncreaseView(int id);
         Task IncreaseView(int id);
