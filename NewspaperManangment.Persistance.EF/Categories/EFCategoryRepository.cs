@@ -30,7 +30,8 @@ namespace NewspaperManangment.Persistance.EF.Categories
 
         public async Task<Category?> Find(int id)
         {
-            return await _categories.FirstOrDefaultAsync(_ => _.Id == id);
+            return await _categories
+                .FirstOrDefaultAsync(_ => _.Id == id);
         }
 
         public async Task<List<GetCategoryDto>?> GetAll(GetCategoryFilterDto? dto)
@@ -52,7 +53,9 @@ namespace NewspaperManangment.Persistance.EF.Categories
 
         public async Task<List<GetCategoryWithTagsDto>?> GetWithTags(GetCategoryFilterDto? dto)
         {
-            var query = _categories.Include(_=>_.Tags)
+            // var query = _categories.Include(_=>_.Tags)
+
+            var query = _categories
                 .Select(_ => new GetCategoryWithTagsDto
             {
                 Id = _.Id,

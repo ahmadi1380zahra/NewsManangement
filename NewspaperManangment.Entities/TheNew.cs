@@ -22,5 +22,6 @@ namespace NewspaperManangment.Entities
         public Author Author { get; set; }
         public int AuthorId { get; set; }
         public HashSet<TheNewTag> TheNewTags { get; set; }
+        public HashSet<Comment> Comments { get; set; } = new();
     }
 }

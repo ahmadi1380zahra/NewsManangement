@@ -15,6 +15,7 @@ namespace NewspaperManangment.Persistance.EF.Tags
     {
         private readonly DbSet<Tag> _tags;
         private readonly DbSet<Category> _categories;
+
         public EFTagRepository(EFDataContext dataContext)
         {
             _tags = dataContext.Tags;
@@ -36,24 +37,33 @@ namespace NewspaperManangment.Persistance.EF.Tags
             return await _tags.FirstOrDefaultAsync(_ => _.Id == id);
         }
 
-        public  async Task<List<GetTagDto>?> GetAll(GetTagFilterDto? dto)
+        public async Task<List<GetTagDto>?> GetAll(GetTagFilterDto? dto)
         {
+            // return await _tags.Select(tag => new GetTagDto
+            //     {
+            //         Id = tag.Id,
+            //         Title = tag.Title,
+            //         Category = tag.Category.Title
+            //     }
+            // ).ToListAsync();
+
             var result = from tag in _tags
-                         join category in _categories
-                         on tag.CategoryId equals category.Id
-                         select new GetTagDto
-                         {
-                             Id = tag.Id,
-                             Title = tag.Title,
-                             Category = category.Title,
-                         };
+                join category in _categories
+                    on tag.CategoryId equals category.Id
+                select new GetTagDto
+                {
+                    Id = tag.Id,
+                    Title = tag.Title,
+                    Category = category.Title,
+                };
 
             if (dto.Title != null)
             {
-                
                 result = result.Where(_ => _.Title.Replace(" ", string.Empty)
-                .Contains(dto.Title.Replace(" ", string.Empty)));
-            };
+                    .Contains(dto.Title.Replace(" ", string.Empty)));
+            }
+
+            ;
 
             //List<GetTagDto> tags = await query.Include(_=>_.Category).Select(tag => new GetTagDto
             //{
