@@ -3,6 +3,7 @@ using Autofac;
 using NewspaperManangment.Contracts.Interfaces;
 using NewspaperManangment.Infrastructure;
 using NewspaperManangment.Persistance.EF;
+using NewspaperManangment.Services.Application.Tags;
 using NewspaperManangment.Services.Authors;
 
 namespace NewspaperManangment.RestApi
@@ -19,6 +20,8 @@ namespace NewspaperManangment.RestApi
         {
             var persistentAssembly = typeof(EFUnitOfWork).Assembly;
             var serviceAssembly = typeof(AuthorAppService).Assembly;
+            var appAssembly = typeof(AddTagCommandHandler).Assembly; // جایی که Handlerها هستن
+
             builder.RegisterType<EFUnitOfWork>().As<UnitOfWork>();
             builder.RegisterType<DateTimeAppService>().As<DateTimeService>();
             builder.RegisterAssemblyTypes(persistentAssembly)
@@ -29,6 +32,9 @@ namespace NewspaperManangment.RestApi
                 .AssignableTo<Service>()
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+           builder.RegisterAssemblyTypes(appAssembly)
+               .AsClosedTypesOf(typeof(ICommandHandler<,>))
+               .InstancePerLifetimeScope();
             base.Load(builder);
         }
     }

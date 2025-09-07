@@ -36,5 +36,6 @@ namespace NewspaperManangment.RestApi.Controllers.Tags
         {
             return await _service.GetAll(dto);
         }
+      
     }
 }

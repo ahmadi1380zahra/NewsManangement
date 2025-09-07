@@ -65,7 +65,11 @@ builder.Services.AddDbContext<EFDataContext>();
 //builder.Services.AddScoped<TheNewTagService, TheNewTagAppService>();
 //builder.Services.AddScoped<DateTimeService, DateTimeAppService>();
 builder.Host.AddAutofac(config);
+
+builder.WebHost.UseUrls("http://localhost:5001");
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -74,7 +78,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
