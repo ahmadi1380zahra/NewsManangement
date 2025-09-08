@@ -38,7 +38,7 @@ namespace NewspaperManangment.RestApi.Controllers.Tags
         )
         {
             
-            return  await _handler.Handle(command,new BasicCommand
+            return  await _handler.Handle(command,new BasicRequest
             {
                 TenantId = "fep tenant iddd",
                 UserId = "zara user idd"
@@ -51,7 +51,7 @@ namespace NewspaperManangment.RestApi.Controllers.Tags
         )
         {
             
-              await _handler.Handle(command,new BasicCommand
+              await _handler.Handle(command,new BasicRequest
             {
                 TenantId = "fep tenant iddd",
                 UserId = "zara user idd"
@@ -69,10 +69,10 @@ namespace NewspaperManangment.RestApi.Controllers.Tags
         }
         [HttpGet("all")]
         public async Task<List<GetAllTag>> GetAll(
-            [FromServices] IQueryHandler<List<GetAllTag>> query
+            [FromServices] ISimpleQueryHandler<List<GetAllTag>> simpleQuery
         )
         {
-            return await query.Handle();
+            return await simpleQuery.Handle();
         }
     }
 }

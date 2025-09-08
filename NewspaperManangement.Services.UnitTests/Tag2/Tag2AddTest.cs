@@ -32,7 +32,7 @@ public class Tag2AddTest : BusinessIntegrationTest
             CategoryId = category.Id
         };
 
-        var actual = await _sut.Handle(dto,new BasicCommand
+        var actual = await _sut.Handle(dto,new BasicRequest
         {
             UserId = "1",
             TenantId = "2"

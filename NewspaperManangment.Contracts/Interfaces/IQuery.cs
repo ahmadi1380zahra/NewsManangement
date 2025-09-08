@@ -2,12 +2,12 @@
 {
 }
 
-public interface IQueryHandler<in TQuery,TResult> where TQuery : IQuery
+public interface IQueryHandler<in TFilter,TResult> where TFilter : IQuery
 {
-    Task<TResult> Handle(TQuery query, BasicCommand? basicCommand = null);
+    Task<TResult> Handle(TFilter query, BasicRequest? basicRequest = null);
 }
 
-public interface IQueryHandler<TResult>   : IQuery
+public interface ISimpleQueryHandler<TResult>   : IQuery
 {
-    Task<TResult> Handle( BasicCommand? basicCommand = null);
+    Task<TResult> Handle( BasicRequest? basicRequest = null);
 }

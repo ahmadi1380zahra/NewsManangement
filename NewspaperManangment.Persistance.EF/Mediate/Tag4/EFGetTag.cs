@@ -8,7 +8,7 @@ public class EFGetTag
     : IQueryHandler<GetTagDtoById,GetTagDto2?>
 {
     public async Task<GetTagDto2?> Handle(GetTagDtoById query,
-        BasicCommand? basicCommand = null)
+        BasicRequest? basicRequest = null)
     {
         return await dataContext.Set<Tag>()
                 .Where(t=>t.Id== query.Id)
@@ -23,9 +23,9 @@ public class EFGetTag
 }
 
 public class GetAll(EFDataContext dataContext)
-    : IQueryHandler<List<GetAllTag>>
+    : ISimpleQueryHandler<List<GetAllTag>>
 {
-    public async Task<List<GetAllTag>> Handle(BasicCommand? basicCommand = null)
+    public async Task<List<GetAllTag>> Handle(BasicRequest? basicRequest = null)
     {
         return await dataContext.Set<Tag>()
             .Select(c=>new GetAllTag

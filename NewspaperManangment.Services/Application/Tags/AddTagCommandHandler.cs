@@ -9,7 +9,7 @@ public class AddTagCommandHandler
         UnitOfWork unitOfWork)
     : ICommandHandler<AddTagCommand,int>
 {
-    public async Task<int> Handle(AddTagCommand command, BasicCommand? basicCommand = null)
+    public async Task<int> Handle(AddTagCommand command, BasicRequest? basicCommand = null)
     {
         var tag = new Tag
         {

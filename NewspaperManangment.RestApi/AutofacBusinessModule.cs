@@ -42,7 +42,7 @@ namespace NewspaperManangment.RestApi
                .AsClosedTypesOf(typeof(IQueryHandler<,>))
                .InstancePerLifetimeScope();
            builder.RegisterAssemblyTypes(persistentAssembly)
-               .AsClosedTypesOf(typeof(IQueryHandler<>))
+               .AsClosedTypesOf(typeof(ISimpleQueryHandler<>))
                .InstancePerLifetimeScope();
             base.Load(builder);
         }

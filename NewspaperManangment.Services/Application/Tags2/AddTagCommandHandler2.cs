@@ -24,7 +24,7 @@ public class AddTagCommandHandler2
     }
     
 
-    public async Task<MyClass> Handle(AddTagCommand2 command, BasicCommand? basicCommand = null)
+    public async Task<MyClass> Handle(AddTagCommand2 command, BasicRequest? basicCommand = null)
     {
         var tag = new Tag
         {
