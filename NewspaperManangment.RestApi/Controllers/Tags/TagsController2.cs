@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewspaperManangment.Persistance.EF.Mediate.Tag4;
+using NewspaperManangment.Services.Application.Tag3;
 using NewspaperManangment.Services.Application.Tags;
 using NewspaperManangment.Services.Application.Tags2;
 using NewspaperManangment.Services.Catgories.Contracts.Dtos;
@@ -43,6 +45,34 @@ namespace NewspaperManangment.RestApi.Controllers.Tags
             });
           
         }
+        [HttpPost("no-response")]
+        public async Task Add2([FromBody] AddTagCommand3 command,[FromServices]
+            ICommandHandler<AddTagCommand3> _handler
+        )
+        {
+            
+              await _handler.Handle(command,new BasicCommand
+            {
+                TenantId = "fep tenant iddd",
+                UserId = "zara user idd"
+            });
+          
+        }
 
+        [HttpGet("detail")]
+        public async Task<GetTagDto2?> Get(
+            [FromQuery] GetTagDtoById dto,
+            [FromServices] IQueryHandler<GetTagDtoById,GetTagDto2> query
+           )
+        {
+            return await query.Handle(dto);
+        }
+        [HttpGet("all")]
+        public async Task<List<GetAllTag>> GetAll(
+            [FromServices] IQueryHandler<List<GetAllTag>> query
+        )
+        {
+            return await query.Handle();
+        }
     }
 }

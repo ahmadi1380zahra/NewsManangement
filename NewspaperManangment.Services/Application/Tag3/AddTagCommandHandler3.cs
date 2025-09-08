@@ -1,15 +1,16 @@
 ﻿using NewspaperManangment.Contracts.Interfaces;
 using NewspaperManangment.Entities;
+using NewspaperManangment.Services.Application.Tags;
 using NewspaperManangment.Services.Tags.Contracts;
 
-namespace NewspaperManangment.Services.Application.Tags;
+namespace NewspaperManangment.Services.Application.Tag3;
 
-public class AddTagCommandHandler
+public class AddTagCommandHandler3
     (TagRepository tagRepository,
         UnitOfWork unitOfWork)
-    : ICommandHandler<AddTagCommand,int>
+    : ICommandHandler<AddTagCommand3>
 {
-    public async Task<int> Handle(AddTagCommand command, BasicCommand? basicCommand = null)
+    public async Task Handle(AddTagCommand3 command, BasicCommand? basic = null)
     {
         var tag = new Tag
         {
@@ -19,6 +20,6 @@ public class AddTagCommandHandler
         
         tagRepository.Add(tag);
         await unitOfWork.Complete();
-        return tag.Id;
+        
     }
 }

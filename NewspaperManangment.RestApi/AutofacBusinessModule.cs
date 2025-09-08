@@ -21,7 +21,7 @@ namespace NewspaperManangment.RestApi
             var persistentAssembly = typeof(EFUnitOfWork).Assembly;
             var serviceAssembly = typeof(AuthorAppService).Assembly;
             var appAssembly = typeof(AddTagCommandHandler).Assembly; // جایی که Handlerها هستن
-
+            //var getAssembly = typeof(Ge).Assembly;
             builder.RegisterType<EFUnitOfWork>().As<UnitOfWork>();
             builder.RegisterType<DateTimeAppService>().As<DateTimeService>();
             builder.RegisterAssemblyTypes(persistentAssembly)
@@ -34,6 +34,15 @@ namespace NewspaperManangment.RestApi
                 .InstancePerLifetimeScope();
            builder.RegisterAssemblyTypes(appAssembly)
                .AsClosedTypesOf(typeof(ICommandHandler<,>))
+               .InstancePerLifetimeScope();
+           builder.RegisterAssemblyTypes(appAssembly)
+               .AsClosedTypesOf(typeof(ICommandHandler<>))
+               .InstancePerLifetimeScope();
+           builder.RegisterAssemblyTypes(persistentAssembly)
+               .AsClosedTypesOf(typeof(IQueryHandler<,>))
+               .InstancePerLifetimeScope();
+           builder.RegisterAssemblyTypes(persistentAssembly)
+               .AsClosedTypesOf(typeof(IQueryHandler<>))
                .InstancePerLifetimeScope();
             base.Load(builder);
         }

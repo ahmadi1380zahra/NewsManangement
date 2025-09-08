@@ -8,24 +8,9 @@ namespace NewspaperManangment.Services.Application.Tags2;
 public class AddTagCommandHandler2
     (TagRepository tagRepository,
         UnitOfWork unitOfWork)
-    : ICommandHandler<AddTagCommand,AddTagCommandHandler2.MyClass>
+    : ICommandHandler<AddTagCommand2,AddTagCommandHandler2.MyClass>
 {
-    public async Task<MyClass> Handle(AddTagCommand command, BasicCommand? basicCommand)
-    {
-        var tag = new Tag
-        {
-            Title = basicCommand!.UserId!,
-            CategoryId = command.CategoryId,
-        };
-        
-        tagRepository.Add(tag);
-        await unitOfWork.Complete();
-        return new MyClass
-        {
-            TenantId = basicCommand.TenantId!,
-            UserId = basicCommand.UserId!
-        };
-    }
+   
     public class MyClass
     {
         public string TenantId {
@@ -36,5 +21,23 @@ public class AddTagCommandHandler2
             get;
             set;
         }
+    }
+    
+
+    public async Task<MyClass> Handle(AddTagCommand2 command, BasicCommand? basicCommand = null)
+    {
+        var tag = new Tag
+        {
+            Title = command.Title,
+            CategoryId = command.CategoryId,
+        };
+        
+        tagRepository.Add(tag);
+        await unitOfWork.Complete();
+        return new MyClass
+        {
+            TenantId = basicCommand.TenantId!,
+            UserId = basicCommand.UserId!
+        };
     }
 }
